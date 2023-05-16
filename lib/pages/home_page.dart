@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/custom/discount_component.dart';
+import 'package:caffe_app_user/custom/quiz_alert.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
 
@@ -46,7 +47,8 @@ class _HomePageState extends State<HomePage> {
                     item: items[index][0], discount: items[index][1]);
               },
             ),
-          )
+          ),
+          const QuizAlert()
         ]),
       ),
     );

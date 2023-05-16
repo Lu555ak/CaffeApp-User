@@ -9,6 +9,7 @@ import 'package:caffe_app_user/pages/home_page.dart';
 import 'package:caffe_app_user/pages/menu_page.dart';
 import 'package:caffe_app_user/pages/loyalty_page.dart';
 import 'package:caffe_app_user/pages/quiz_page.dart';
+import 'package:caffe_app_user/pages/cart_page.dart';
 
 class ManagerPage extends StatefulWidget {
   const ManagerPage({super.key});
@@ -34,12 +35,14 @@ class _ManagerPageState extends State<ManagerPage> {
     const QuizPage(),
   ];
 
+  final Widget _cart = const CartPage();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: secondaryColor,
-        appBar: const MyAppBar(),
+        appBar: MyAppBar(onTap: () {}),
         body: _pages[_selectedIndex],
         bottomNavigationBar: MyBottomNavBar(
           onTabChange: (index) => navigateBottomBar(index),

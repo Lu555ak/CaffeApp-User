@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBar({super.key});
+  final Function onTap;
+
+  const MyAppBar({super.key, required this.onTap});
 
   @override
   State<MyAppBar> createState() => _MyAppBarState();
@@ -58,7 +60,7 @@ class _MyAppBarState extends State<MyAppBar> {
               trailing: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: widget.onTap(),
                     icon: const Icon(
                       Icons.shopping_bag_rounded,
                       color: secondaryColor,

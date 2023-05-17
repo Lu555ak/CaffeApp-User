@@ -42,6 +42,9 @@ class _LoginPageState extends State<LoginPage> {
                         offset: Offset(1, 1))
                   ]),
               child: Column(children: [
+                const SizedBox(
+                  height: 35,
+                ),
                 const Text("LOGIN",
                     style: TextStyle(
                         color: primaryColor,

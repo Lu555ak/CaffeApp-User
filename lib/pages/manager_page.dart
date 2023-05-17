@@ -35,8 +35,6 @@ class _ManagerPageState extends State<ManagerPage> {
     const QuizPage(),
   ];
 
-  final Widget _cart = const CartPage();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

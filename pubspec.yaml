@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_nav_bar: ^5.0.6
+  mobile_scanner: ^3.2.0
 
 dev_dependencies:
   flutter_test:

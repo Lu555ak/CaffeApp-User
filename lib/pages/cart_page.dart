@@ -4,6 +4,8 @@ import 'package:caffe_app_user/utility/constants.dart';
 
 import 'package:caffe_app_user/custom/discount_component.dart';
 
+import 'package:caffe_app_user/pages/qr_scanner.dart';
+
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
@@ -46,127 +48,132 @@ class _CartPageState extends State<CartPage> {
                 fontSize: 25,
                 fontWeight: FontWeight.bold)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: cart.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          cart[index]["name"].toString(),
-                          style: const TextStyle(
-                              color: primaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: DiscountComponent(
-                              discount: cart[index]["discount"],
-                            ))
-                      ],
-                    ),
-                    subtitle: Text(
-                      "${cart[index]["price"]}€",
-                      style: const TextStyle(
-                          color: primaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    trailing: FittedBox(
-                      child: Row(
-                        children: [
-                          Text(cart[index]["amount"].toString(),
-                              style: const TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.w500)),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  const CircleBorder()),
-                              padding: MaterialStateProperty.all(
-                                  const EdgeInsets.all(5)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(primaryColor),
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
-                                      (states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return subColor2;
-                                }
-                                return null;
-                              }),
-                            ),
-                            child: const Icon(
-                              Icons.remove,
-                              color: secondaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const Divider(
-              thickness: 3,
-              color: primaryColor,
-            ),
-            SizedBox(
-              height: 80,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Row(
-                  children: [
-                    const Text("TOTAL: ",
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w900)),
-                    Text("${sumPrice().toString()}€",
+      body: Column(
+        children: [
+          const Divider(
+            thickness: 3,
+            color: primaryColor,
+          ),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: cart.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Row(
+                    children: [
+                      Text(
+                        cart[index]["name"].toString(),
                         style: const TextStyle(
                             color: primaryColor,
                             fontSize: 18,
-                            fontWeight: FontWeight.w500)),
-                    Expanded(child: Container()),
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(primaryColor),
-                        overlayColor:
-                            MaterialStateProperty.resolveWith<Color?>((states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return subColor2;
-                          }
-                          return null;
-                        }),
+                            fontWeight: FontWeight.w900),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("ORDER",
-                            style: TextStyle(
-                                color: secondaryColor,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w900)),
-                      ),
-                    )
-                  ],
-                ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: DiscountComponent(
+                            discount: cart[index]["discount"],
+                          ))
+                    ],
+                  ),
+                  subtitle: Text(
+                    "${cart[index]["price"]}€",
+                    style: const TextStyle(
+                        color: primaryColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  trailing: FittedBox(
+                    child: Row(
+                      children: [
+                        Text(cart[index]["amount"].toString(),
+                            style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 21,
+                                fontWeight: FontWeight.w500)),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            shape:
+                                MaterialStateProperty.all(const CircleBorder()),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.all(5)),
+                            backgroundColor:
+                                MaterialStateProperty.all(primaryColor),
+                            overlayColor:
+                                MaterialStateProperty.resolveWith<Color?>(
+                                    (states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return subColor2;
+                              }
+                              return null;
+                            }),
+                          ),
+                          child: const Icon(
+                            Icons.remove,
+                            color: secondaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const Divider(
+            thickness: 3,
+            color: primaryColor,
+          ),
+          SizedBox(
+            height: 80,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                children: [
+                  const Text("TOTAL: ",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 26,
+                          fontWeight: FontWeight.w900)),
+                  Text("${sumPrice().toString()}€",
+                      style: const TextStyle(
+                          color: primaryColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500)),
+                  Expanded(child: Container()),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const QRCodeScanner()));
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(primaryColor),
+                      overlayColor:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return subColor2;
+                        }
+                        return null;
+                      }),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("ORDER",
+                          style: TextStyle(
+                              color: secondaryColor,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w900)),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

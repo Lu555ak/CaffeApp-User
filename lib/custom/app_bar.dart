@@ -60,7 +60,11 @@ class _MyAppBarState extends State<MyAppBar> {
               trailing: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: IconButton(
-                    onPressed: widget.onTap(),
+                    onPressed: () {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        widget.onTap();
+                      });
+                    },
                     icon: const Icon(
                       Icons.shopping_bag_rounded,
                       color: secondaryColor,

@@ -42,7 +42,10 @@ class _ManagerPageState extends State<ManagerPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: secondaryColor,
-        appBar: MyAppBar(onTap: () {}),
+        appBar: MyAppBar(onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CartPage()));
+        }),
         body: _pages[_selectedIndex],
         bottomNavigationBar: MyBottomNavBar(
           onTabChange: (index) => navigateBottomBar(index),

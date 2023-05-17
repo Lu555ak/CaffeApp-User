@@ -11,12 +11,14 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  List<List<dynamic>> items = [
-    ["ORANGE JUICE", 15],
-    ["HEINEKEN", 25],
-    ["COFFE", 50],
-    ["WATER", 100]
+  List<Map<String, dynamic>> items = [
+    {"name": "ORANGE JUICE", "price": 2.0, "discount": 15},
+    {"name": "HEINEKEN", "price": 3.0, "discount": 25},
+    {"name": "COFFE", "price": 2.0, "discount": 0},
+    {"name": "WATER", "price": 1.0, "discount": 100},
   ];
+
+  TextEditingController searchBarController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,26 @@ class _MenuPageState extends State<MenuPage> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Container(height: 50, color: Colors.red),
+          const SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: searchBarController,
+            decoration: const InputDecoration(
+              labelText: "Search",
+              hintText: "Search",
+              prefixIcon: Icon(Icons.search),
+              prefixIconColor: primaryColor,
+              labelStyle: TextStyle(color: primaryColor),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2, color: subColor2),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 4, color: subColor2),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            ),
+            onChanged: (value) {},
+          ),
           const SizedBox(
             height: 10,
           ),
@@ -38,23 +59,22 @@ class _MenuPageState extends State<MenuPage> {
                   title: Row(
                     children: [
                       Text(
-                        items[index][0].toString(),
+                        items[index]["name"].toString(),
                         style: const TextStyle(
                             color: primaryColor,
                             fontSize: 18,
                             fontWeight: FontWeight.w900),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: DiscountComponent(
-                          discount: items[index][1],
-                        ),
-                      )
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: DiscountComponent(
+                            discount: items[index]["discount"],
+                          ))
                     ],
                   ),
-                  subtitle: const Text(
-                    "25.0€",
-                    style: TextStyle(
+                  subtitle: Text(
+                    "${items[index]["price"]}€",
+                    style: const TextStyle(
                         color: primaryColor,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),
@@ -69,7 +89,7 @@ class _MenuPageState extends State<MenuPage> {
                       overlayColor:
                           MaterialStateProperty.resolveWith<Color?>((states) {
                         if (states.contains(MaterialState.pressed)) {
-                          return secondaryColor;
+                          return subColor2;
                         }
                         return null;
                       }),

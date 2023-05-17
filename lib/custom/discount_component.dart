@@ -9,6 +9,9 @@ class DiscountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (discount == 0) {
+      return Container();
+    }
     return Container(
       decoration: const BoxDecoration(
           color: subColor2, borderRadius: BorderRadius.all(Radius.circular(5))),

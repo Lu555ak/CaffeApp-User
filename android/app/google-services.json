@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "857911351350",
+    "project_id": "caffeapp-zavrsni",
+    "storage_bucket": "caffeapp-zavrsni.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857911351350:android:6fe64def271a24c39fe097",
+        "android_client_info": {
+          "package_name": "com.example.caffe_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857911351350-8ae1n0ob9epiu8vt9uq3el4u0obj0ca4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTFg5WXRx-OjBCPcMgR3Pqce3CEXG0-LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857911351350-8ae1n0ob9epiu8vt9uq3el4u0obj0ca4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "857911351350-g05j84kjv8hfntvnklg37nj6gnrsbenu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.caffeApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857911351350:android:bdbe395216fb25959fe097",
+        "android_client_info": {
+          "package_name": "com.example.caffe_app_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857911351350-8ae1n0ob9epiu8vt9uq3el4u0obj0ca4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTFg5WXRx-OjBCPcMgR3Pqce3CEXG0-LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857911351350-8ae1n0ob9epiu8vt9uq3el4u0obj0ca4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "857911351350-g05j84kjv8hfntvnklg37nj6gnrsbenu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.caffeApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

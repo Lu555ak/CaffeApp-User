@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   google_nav_bar: ^5.0.6
   mobile_scanner: ^3.2.0
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
 
 
 dev_dependencies:

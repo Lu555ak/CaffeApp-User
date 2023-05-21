@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:caffe_app_user/pages/manager_page.dart';
 import 'package:caffe_app_user/auth/login_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 

@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/custom/background.dart';
 import 'package:caffe_app_user/utility/constants.dart';
+import 'auth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,15 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  bool? rememberMe = false;
+  bool? _rememberMe = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(children: [
         const Background(),
         LayoutBuilder(
@@ -54,6 +60,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   thickness: 8,
                 ),
                 TextFormField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
@@ -69,6 +76,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   endIndent: 20,
                 ),
                 TextFormField(
+                  controller: _usernameController,
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     enabledBorder: InputBorder.none,
@@ -83,6 +91,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   endIndent: 20,
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     enabledBorder: InputBorder.none,
@@ -99,11 +108,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 ListTile(
                   leading: Checkbox(
-                    value: rememberMe,
+                    value: _rememberMe,
                     activeColor: primaryColor,
                     onChanged: (value) {
                       setState(() {
-                        rememberMe = value;
+                        _rememberMe = value;
                       });
                     },
                   ),
@@ -119,7 +128,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Auth().signUpEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            username: _usernameController.text);
+                      });
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(const CircleBorder()),
                       padding:

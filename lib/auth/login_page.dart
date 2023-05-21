@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/custom/background.dart';
 import 'package:caffe_app_user/utility/constants.dart';
+import 'auth.dart';
 
 import 'package:caffe_app_user/auth/registration_page.dart';
 
@@ -13,11 +14,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool? rememberMe = false;
+  bool? _rememberMe = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(children: [
         const Background(),
         LayoutBuilder(
@@ -55,11 +59,13 @@ class _LoginPageState extends State<LoginPage> {
                   thickness: 8,
                 ),
                 TextFormField(
+                  controller: _emailController,
                   textAlign: TextAlign.center,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
-                    hintText: 'Username',
+                    hintText: 'Email',
                   ),
                   autocorrect: false,
                 ),
@@ -69,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   endIndent: 20,
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     enabledBorder: InputBorder.none,
@@ -91,11 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                     )),
                 ListTile(
                   leading: Checkbox(
-                    value: rememberMe,
+                    value: _rememberMe,
                     activeColor: primaryColor,
                     onChanged: (value) {
                       setState(() {
-                        rememberMe = value;
+                        _rememberMe = value;
                       });
                     },
                   ),
@@ -111,7 +118,13 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        Auth().signInEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text);
+                      });
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(const CircleBorder()),
                       padding:

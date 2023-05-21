@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final Function onTap;
+  final Function onTapCart;
+  final Function onTapLogout;
+  final String username;
 
-  const MyAppBar({super.key, required this.onTap});
+  const MyAppBar(
+      {super.key,
+      required this.onTapCart,
+      required this.onTapLogout,
+      this.username = "User"});
 
   @override
   State<MyAppBar> createState() => _MyAppBarState();
@@ -41,7 +47,11 @@ class _MyAppBarState extends State<MyAppBar> {
           children: [
             ListTile(
               leading: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      widget.onTapLogout();
+                    });
+                  },
                   icon: const Icon(
                     Icons.login_rounded,
                     color: secondaryColor,
@@ -51,8 +61,8 @@ class _MyAppBarState extends State<MyAppBar> {
                 "Logged in as ",
                 style: TextStyle(color: secondaryColor, fontSize: 20),
               ),
-              subtitle: const Text("User",
-                  style: TextStyle(
+              subtitle: Text(widget.username,
+                  style: const TextStyle(
                       color: secondaryColor,
                       fontSize: 25,
                       fontWeight: FontWeight.bold)),
@@ -62,7 +72,7 @@ class _MyAppBarState extends State<MyAppBar> {
                 child: IconButton(
                     onPressed: () {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        widget.onTap();
+                        widget.onTapCart();
                       });
                     },
                     icon: const Icon(

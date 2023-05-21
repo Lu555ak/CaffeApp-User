@@ -11,6 +11,8 @@ import 'package:caffe_app_user/pages/loyalty_page.dart';
 import 'package:caffe_app_user/pages/quiz_page.dart';
 import 'package:caffe_app_user/pages/cart_page.dart';
 
+import 'package:caffe_app_user/auth/auth.dart';
+
 class ManagerPage extends StatefulWidget {
   const ManagerPage({super.key});
 
@@ -40,10 +42,16 @@ class _ManagerPageState extends State<ManagerPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: secondaryColor,
-        appBar: MyAppBar(onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CartPage()));
-        }),
+        appBar: MyAppBar(
+          onTapCart: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CartPage()));
+          },
+          onTapLogout: () {
+            Auth().signOut();
+          },
+          username: Auth().currentUser?.displayName ?? "User",
+        ),
         body: _pages[_selectedIndex],
         bottomNavigationBar: MyBottomNavBar(
           onTabChange: (index) => navigateBottomBar(index),

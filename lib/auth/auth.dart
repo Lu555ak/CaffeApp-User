@@ -3,7 +3,7 @@ import "package:firebase_auth/firebase_auth.dart";
 class Auth {
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
-  Stream<User?> get userChanges => FirebaseAuth.instance.userChanges();
+  Stream<User?> get userChanges => FirebaseAuth.instance.authStateChanges();
 
   Future<String?> signUp(
       {required String email,
@@ -15,6 +15,10 @@ class Auth {
         password: password,
       );
       await FirebaseAuth.instance.currentUser?.updateDisplayName(username);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

@@ -30,12 +30,16 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: StreamBuilder(
-          stream: Auth().authStateChanges,
+          stream: Auth().userChanges,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const ManagerPage();
+              return const ManagerPage(
+                key: Key("ManagerPage"),
+              );
             } else {
-              return const LoginPage();
+              return const LoginPage(
+                key: Key("LoginPage"),
+              );
             }
           },
         ));

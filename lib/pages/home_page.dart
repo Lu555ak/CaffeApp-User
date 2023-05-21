@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 10),
-                child: Text("D I S C O U N T",
+                child: Text("F E A T U R E D",
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 24,

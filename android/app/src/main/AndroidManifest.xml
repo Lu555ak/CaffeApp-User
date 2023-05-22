@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.caffe_app_user">
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
         android:label="caffe_app_user"
         android:name="${applicationName}"

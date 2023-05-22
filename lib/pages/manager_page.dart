@@ -12,6 +12,7 @@ import 'package:caffe_app_user/pages/quiz_page.dart';
 import 'package:caffe_app_user/pages/cart_page.dart';
 
 import 'package:caffe_app_user/auth/auth.dart';
+import 'package:caffe_app_user/models/menu_model.dart';
 
 class ManagerPage extends StatefulWidget {
   const ManagerPage({super.key});
@@ -21,6 +22,12 @@ class ManagerPage extends StatefulWidget {
 }
 
 class _ManagerPageState extends State<ManagerPage> {
+  @override
+  initState() {
+    Menu().loadFromDatabase();
+    super.initState();
+  }
+
   // Page navigation
   int _selectedIndex = 0;
   navigateBottomBar(int index) {

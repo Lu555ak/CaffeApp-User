@@ -11,16 +11,19 @@ class Menu {
 
   int get getMenuLength => _menu.length;
   MenuItem getMenuItemAt(int index) => _menu[index];
+  MenuItem getMenuItemWithName(String name) =>
+      _menu[_menu.indexWhere((element) => element.getName == name)];
   void addMenuItem(MenuItem menuItem) => _menu.add(menuItem);
   void clearMenu() => _menu.clear();
 
-  Future loadFromDatabase() async {
-    await FirebaseFirestore.instance.collection("menu").get().then((snapshot) {
-      for (var menuItem in snapshot.docs) {
-        addMenuItem(MenuItem(menuItem["name"], menuItem["price"],
-            menuItem["discount"], menuItem["featured"]));
-      }
-    });
+  void loadFromDatabase() async {
+    var collection = FirebaseFirestore.instance.collection('menu');
+    var querySnapshot = await collection.get();
+    for (var queryDocumentSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      addMenuItem(MenuItem(
+          data["name"], data["price"], data["discount"], data["featured"]));
+    }
   }
 }
 

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
 
-import 'package:caffe_app_user/custom/discount_component.dart';
+import 'package:caffe_app_user/custom/menu_item.dart';
 
 import 'package:caffe_app_user/pages/qr_scanner.dart';
+
+import 'package:caffe_app_user/models/menu_model.dart';
+import 'package:caffe_app_user/models/cart_model.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -14,19 +17,20 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  List<Map<String, dynamic>> cart = [
-    {"name": "ORANGE JUICE", "price": 2.0, "discount": 15, "amount": 4},
-    {"name": "HEINEKEN", "price": 3.0, "discount": 25, "amount": 1},
-    {"name": "COFFE", "price": 2.0, "discount": 0, "amount": 2},
-    {"name": "WATER", "price": 1.0, "discount": 100, "amount": 3},
-  ];
+  var cartKeys = Cart().getCart.keys.toList();
 
-  double sumPrice() {
-    double sum = 0;
-    for (var item in cart) {
-      sum += item["price"] * item["amount"];
+  double cartTotal() {
+    double total = 0;
+    for (var cartItem in cartKeys) {
+      if (Menu().getMenuItemWithName(cartItem).getDiscount > 0) {
+        total += Menu().getMenuItemWithName(cartItem).getPriceDiscount *
+            Cart().getItemAmount(cartItem);
+      } else {
+        total += Menu().getMenuItemWithName(cartItem).getPrice *
+            Cart().getItemAmount(cartItem);
+      }
     }
-    return sum;
+    return total;
   }
 
   @override
@@ -58,67 +62,20 @@ class _CartPageState extends State<CartPage> {
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: cart.length,
+              itemCount: cartKeys.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Row(
-                    children: [
-                      Text(
-                        cart[index]["name"].toString(),
-                        style: const TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: DiscountComponent(
-                            discount: cart[index]["discount"],
-                          ))
-                    ],
-                  ),
-                  subtitle: Text(
-                    "${cart[index]["price"]}€",
-                    style: const TextStyle(
-                        color: primaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  trailing: FittedBox(
-                    child: Row(
-                      children: [
-                        Text(cart[index]["amount"].toString(),
-                            style: const TextStyle(
-                                color: primaryColor,
-                                fontSize: 21,
-                                fontWeight: FontWeight.w500)),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            shape:
-                                MaterialStateProperty.all(const CircleBorder()),
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.all(5)),
-                            backgroundColor:
-                                MaterialStateProperty.all(primaryColor),
-                            overlayColor:
-                                MaterialStateProperty.resolveWith<Color?>(
-                                    (states) {
-                              if (states.contains(MaterialState.pressed)) {
-                                return subColor2;
-                              }
-                              return null;
-                            }),
-                          ),
-                          child: const Icon(
-                            Icons.remove,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return MenuItemWidget(
+                    menuItem: Menu().getMenuItemWithName(cartKeys[index]),
+                    cartMode: true,
+                    cartAmount: Cart().getItemAmount(cartKeys[index]),
+                    onPress: () {
+                      setState(() {
+                        Cart().reduceItemAmount(cartKeys[index]);
+                        if (Cart().getItemAmount(cartKeys[index]) == 0) {
+                          cartKeys.removeAt(index);
+                        }
+                      });
+                    });
               },
             ),
           ),
@@ -137,7 +94,7 @@ class _CartPageState extends State<CartPage> {
                           color: primaryColor,
                           fontSize: 26,
                           fontWeight: FontWeight.w900)),
-                  Text("${sumPrice().toString()}€",
+                  Text("${cartTotal()}€",
                       style: const TextStyle(
                           color: primaryColor,
                           fontSize: 18,

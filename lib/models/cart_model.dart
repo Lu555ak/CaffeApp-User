@@ -30,6 +30,10 @@ class Cart {
     }
   }
 
+  List<String> getKeys() {
+    return _cart.keys.toList();
+  }
+
   Map<String, int> get getCart => _cart;
 
   int get getCartLength => _cart.length;

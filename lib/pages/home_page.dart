@@ -6,7 +6,6 @@ import 'package:caffe_app_user/custom/quiz_alert.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 
 import 'package:caffe_app_user/models/menu_model.dart';
-import 'package:caffe_app_user/models/cart_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

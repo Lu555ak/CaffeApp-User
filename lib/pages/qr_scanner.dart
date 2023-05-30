@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -71,7 +70,11 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
           _makeOrder(value ?? "empty");
           scannerControler.stop();
-          Navigator.pop(context);
+          Future.delayed(const Duration(milliseconds: 100), () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          });
         },
         controller: scannerControler,
       ),
@@ -87,10 +90,15 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
     try {
       Cart().commitOrder(int.parse(dataMap[1]));
+      setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Order was successfull!"),
         backgroundColor: successColor,
       ));
+      int count = 0;
+      Navigator.popUntil(context, (route) {
+        return count++ == 1;
+      });
       return;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

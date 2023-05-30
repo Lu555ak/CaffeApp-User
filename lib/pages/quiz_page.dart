@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:caffe_app_user/utility/constants.dart';
-
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
 

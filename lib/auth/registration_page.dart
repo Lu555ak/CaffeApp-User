@@ -1,5 +1,5 @@
 import 'package:caffe_app_user/custom/background.dart';
-import 'package:caffe_app_user/pages/home_page.dart';
+
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:caffe_app_user/utility/utility.dart';
 import 'package:caffe_app_user/auth/auth.dart';
@@ -151,15 +151,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_registerFormKey.currentState!.validate()) {
-                          final message = await Auth().signUp(
+                          await Auth().signUp(
                               email: _emailController.text,
                               password: _passwordController.text,
                               username: _usernameController.text);
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(message ?? "Error"),
-                            backgroundColor: dangerColor,
-                          ));
                         }
                       },
                       style: ButtonStyle(

@@ -1,5 +1,5 @@
 import 'package:caffe_app_user/custom/background.dart';
-import 'package:caffe_app_user/pages/home_page.dart';
+
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:caffe_app_user/utility/utility.dart';
 import 'package:caffe_app_user/auth/auth.dart';
@@ -136,15 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_loginFormKey.currentState!.validate()) {
-                          final message = await Auth().signIn(
+                          await Auth().signIn(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(message ?? "Error"),
-                            backgroundColor: dangerColor,
-                          ));
                         }
                       },
                       style: ButtonStyle(

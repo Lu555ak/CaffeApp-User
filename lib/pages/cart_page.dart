@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -19,11 +17,9 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  var cartKeys = Cart().getCart.keys.toList();
-
   double cartTotal() {
     double total = 0;
-    for (var cartItem in cartKeys) {
+    for (var cartItem in Cart().getKeys()) {
       if (Menu().getMenuItemWithName(cartItem).getDiscount > 0) {
         total += Menu().getMenuItemWithName(cartItem).getPriceDiscount *
             Cart().getItemAmount(cartItem);
@@ -64,17 +60,19 @@ class _CartPageState extends State<CartPage> {
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: cartKeys.length,
+              itemCount: Cart().getKeys().length,
               itemBuilder: (context, index) {
                 return MenuItemWidget(
-                    menuItem: Menu().getMenuItemWithName(cartKeys[index]),
+                    menuItem:
+                        Menu().getMenuItemWithName(Cart().getKeys()[index]),
                     cartMode: true,
-                    cartAmount: Cart().getItemAmount(cartKeys[index]),
+                    cartAmount: Cart().getItemAmount(Cart().getKeys()[index]),
                     onPress: () {
                       setState(() {
-                        Cart().reduceItemAmount(cartKeys[index]);
-                        if (Cart().getItemAmount(cartKeys[index]) == 0) {
-                          cartKeys.removeAt(index);
+                        Cart().reduceItemAmount(Cart().getKeys()[index]);
+                        if (Cart().getItemAmount(Cart().getKeys()[index]) ==
+                            0) {
+                          Cart().getKeys().removeAt(index);
                         }
                       });
                     });
@@ -104,14 +102,11 @@ class _CartPageState extends State<CartPage> {
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {
-                      if (cartKeys.isNotEmpty) {
+                      if (Cart().getKeys().isNotEmpty) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const QRCodeScanner()));
-                        setState(() {
-                          cartKeys.clear();
-                        });
                       } else {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(

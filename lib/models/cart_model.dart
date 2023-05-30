@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+
 class Cart {
   static Cart? _instance;
 
@@ -6,6 +8,7 @@ class Cart {
   factory Cart() => _instance ??= Cart._();
 
   final Map<String, int> _cart = {};
+  final database = FirebaseDatabase.instance;
 
   void addItem(String item, int amount) {
     if (amount == 0) return;
@@ -30,4 +33,19 @@ class Cart {
   Map<String, int> get getCart => _cart;
 
   int get getCartLength => _cart.length;
+
+  void commitOrder(int tableId) async {
+    int orderNumber;
+    final DatabaseReference orderLengthRef = database.ref("orders/");
+    final snapshot = await orderLengthRef.get();
+    if (snapshot.exists) {
+      orderNumber = snapshot.children.length + 1;
+    } else {
+      orderNumber = 1;
+    }
+
+    final DatabaseReference orderRef = database.ref("orders/order$orderNumber");
+    await orderRef.set({"table": tableId, "accepted": false, "cart": _cart});
+    _cart.clear();
+  }
 }

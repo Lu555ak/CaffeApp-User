@@ -173,7 +173,7 @@ class _MenuPageState extends State<MenuPage> {
                                     fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                "${calculateMultiItemCost(itemAmount, index)}€",
+                                "${calculateMultiItemCost(itemAmount, index).toStringAsFixed(2)}€",
                                 style: const TextStyle(
                                     color: primaryColor,
                                     fontSize: 18,

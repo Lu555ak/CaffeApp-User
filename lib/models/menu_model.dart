@@ -17,6 +17,7 @@ class Menu {
   void clearMenu() => _menu.clear();
 
   void loadFromDatabase() async {
+    _menu.clear();
     var collection = FirebaseFirestore.instance.collection('menu');
     var querySnapshot = await collection.get();
     for (var queryDocumentSnapshot in querySnapshot.docs) {
@@ -24,6 +25,16 @@ class Menu {
       addMenuItem(MenuItem(
           data["name"], data["price"], data["discount"], data["featured"]));
     }
+  }
+
+  List<MenuItem> getFeaturedItems() {
+    List<MenuItem> featured = [];
+    for (var element in _menu) {
+      if (element.getFeatured == true) {
+        featured.add(element);
+      }
+    }
+    return featured;
   }
 }
 

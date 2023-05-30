@@ -5,6 +5,9 @@ import 'package:caffe_app_user/custom/quiz_alert.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
 
+import 'package:caffe_app_user/models/menu_model.dart';
+import 'package:caffe_app_user/models/cart_model.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -13,12 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<List<dynamic>> items = [
-    ["ORANGE JUICE", 15],
-    ["HEINEKEN", 25],
-    ["COFFE", 50],
-    ["WATER", 100]
-  ];
+  final List<MenuItem> _featuredMenu = Menu().getFeaturedItems();
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +39,11 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: items.length,
+              itemCount: _featuredMenu.length,
               itemBuilder: (context, index) {
                 return FeaturedComponent(
-                    item: items[index][0], discount: items[index][1]);
+                  item: _featuredMenu[index],
+                );
               },
             ),
           ),

@@ -24,7 +24,9 @@ class ManagerPage extends StatefulWidget {
 class _ManagerPageState extends State<ManagerPage> {
   @override
   initState() {
-    Menu().loadFromDatabase();
+    setState(() {
+      Menu().loadFromDatabase();
+    });
     super.initState();
   }
 

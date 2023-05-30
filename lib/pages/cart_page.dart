@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -94,7 +96,7 @@ class _CartPageState extends State<CartPage> {
                           color: primaryColor,
                           fontSize: 26,
                           fontWeight: FontWeight.w900)),
-                  Text("${cartTotal()}€",
+                  Text("${cartTotal().toStringAsFixed(2)}€",
                       style: const TextStyle(
                           color: primaryColor,
                           fontSize: 18,
@@ -102,10 +104,22 @@ class _CartPageState extends State<CartPage> {
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const QRCodeScanner()));
+                      if (cartKeys.isNotEmpty) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const QRCodeScanner()));
+                        setState(() {
+                          cartKeys.clear();
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content:
+                              Text("Please add items to your cart to order!"),
+                          backgroundColor: dangerColor,
+                        ));
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(primaryColor),
@@ -125,7 +139,7 @@ class _CartPageState extends State<CartPage> {
                               fontSize: 22,
                               fontWeight: FontWeight.w900)),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

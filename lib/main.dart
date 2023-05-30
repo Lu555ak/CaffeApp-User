@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 
 import 'package:caffe_app_user/pages/manager_page.dart';
 import 'package:caffe_app_user/auth/login_page.dart';
+import 'package:caffe_app_user/models/menu_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

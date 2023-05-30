@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 
 import 'package:caffe_app_user/custom/discount_component.dart';
+import 'package:caffe_app_user/models/menu_model.dart';
 
 class FeaturedComponent extends StatelessWidget {
-  final String item;
-  final int discount;
+  final MenuItem item;
 
-  const FeaturedComponent(
-      {super.key, required this.item, required this.discount});
+  const FeaturedComponent({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class FeaturedComponent extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              item,
+                              item.getName,
                               style: const TextStyle(
                                   color: primaryColor,
                                   fontSize: 20,
@@ -63,7 +62,7 @@ class FeaturedComponent extends StatelessWidget {
                           Align(
                               alignment: Alignment.bottomRight,
                               child: DiscountComponent(
-                                discount: discount,
+                                discount: item.getDiscount,
                               )),
                         ],
                       ),
@@ -72,8 +71,8 @@ class FeaturedComponent extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(children: const [
-                  Align(
+                child: Column(children: [
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Price:",
@@ -85,30 +84,43 @@ class FeaturedComponent extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "5.00€",
-                      style: TextStyle(
-                          color: dangerColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          decoration: TextDecoration.lineThrough),
-                    ),
+                    child: (item.getDiscount > 0)
+                        ? Text(
+                            "${item.getPrice.toStringAsFixed(2)}€",
+                            style: const TextStyle(
+                                color: secondaryColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.lineThrough,
+                                decorationThickness: 3),
+                          )
+                        : Text(
+                            "${item.getPrice.toStringAsFixed(2)}€",
+                            style: const TextStyle(
+                              color: secondaryColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                   ),
-                  Divider(
-                    color: secondaryColor,
-                    thickness: 1,
-                  ),
+                  (item.getDiscount > 0)
+                      ? const Divider(
+                          color: secondaryColor,
+                          thickness: 1,
+                        )
+                      : Container(),
                   Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "3.50€",
-                      style: TextStyle(
-                        color: secondaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
+                      alignment: Alignment.centerLeft,
+                      child: (item.getDiscount > 0)
+                          ? Text(
+                              "${item.getPriceDiscount.toStringAsFixed(2)}€",
+                              style: const TextStyle(
+                                color: dangerColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          : Container()),
                 ]),
               ),
             )

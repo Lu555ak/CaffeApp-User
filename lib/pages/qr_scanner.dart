@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+
+import 'package:caffe_app_user/models/cart_model.dart';
 
 class QRCodeScanner extends StatefulWidget {
   const QRCodeScanner({super.key});
@@ -12,6 +15,7 @@ class QRCodeScanner extends StatefulWidget {
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
   MobileScannerController scannerControler = MobileScannerController();
+  bool barcodeScanned = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +57,47 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
         ],
       ),
       body: MobileScanner(
-        onDetect: _foundQRCode,
+        onDetect: (capture) {
+          List<Barcode> barcodes = capture.barcodes;
+          var value = barcodes[0].rawValue;
+
+          if (value != null) {
+            value = value
+                .replaceAll(' ', '')
+                .replaceAll("'", "")
+                .replaceAll("{", "")
+                .replaceAll("}", "");
+          }
+
+          _makeOrder(value ?? "empty");
+          scannerControler.stop();
+          Navigator.pop(context);
+        },
         controller: scannerControler,
       ),
     );
   }
 
-  void _foundQRCode(BarcodeCapture barcodes) {
-    final String code = barcodes.raw;
-    Navigator.pop(context);
+  _makeOrder(String data) {
+    if (data == "empty") return;
+
+    var dataMap = data.split(":");
+
+    if (dataMap[0] != "CaffeAppTable") return;
+
+    try {
+      Cart().commitOrder(int.parse(dataMap[1]));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Order was successfull!"),
+        backgroundColor: successColor,
+      ));
+      return;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Error, there was an issue with sending your order!"),
+        backgroundColor: dangerColor,
+      ));
+      return;
+    }
   }
 }

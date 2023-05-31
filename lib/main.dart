@@ -1,4 +1,5 @@
 import 'package:caffe_app_user/auth/auth.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +7,8 @@ import 'firebase_options.dart';
 
 import 'package:caffe_app_user/pages/manager_page.dart';
 import 'package:caffe_app_user/auth/login_page.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,21 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        supportedLocales: const [Locale("en", "EN"), Locale("hr", "HR")],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        localeListResolutionCallback: (locales, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locales![0].languageCode &&
+                supportedLocale.countryCode == locales[0].countryCode) {
+              return supportedLocale;
+            }
+          }
+          return supportedLocales.first;
+        },
         home: StreamBuilder(
           stream: Auth().userChanges,
           builder: (context, snapshot) {

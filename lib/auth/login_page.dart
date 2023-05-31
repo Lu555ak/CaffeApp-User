@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/auth/forgot_password_page.dart';
 import 'package:caffe_app_user/custom/background.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:caffe_app_user/utility/utility.dart';
@@ -55,8 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 35,
                   ),
-                  const Text("LOGIN",
-                      style: TextStyle(
+                  Text(AppLocalizations.of(context).translate("login_text"),
+                      style: const TextStyle(
                           color: primaryColor,
                           fontSize: 40,
                           fontWeight: FontWeight.bold)),

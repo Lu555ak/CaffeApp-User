@@ -1,4 +1,5 @@
 import 'package:caffe_app_user/auth/auth.dart';
+import 'package:caffe_app_user/models/cart_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +18,10 @@ class LoyaltyPage extends StatefulWidget {
 }
 
 class _LoyaltyPageState extends State<LoyaltyPage> {
-  Future<Map<dynamic, dynamic>> fetchCredits() async {
-    var value = await FirebaseFirestore.instance
-        .collection('users')
-        .where('uid', isEqualTo: Auth().currentUser?.uid)
-        .limit(1)
-        .get();
-    return value.docs.first.data();
+  @override
+  void initState() {
+    Cart().fetchCredits();
+    super.initState();
   }
 
   @override
@@ -33,24 +31,12 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            FutureBuilder(
-              future: fetchCredits(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    Map<dynamic, dynamic> data =
-                        snapshot.data as Map<dynamic, dynamic>;
-                    return CreditsDisplay(creditsAmount: data["credits"]);
-                  }
-                } else {
-                  return const CreditsDisplay(
-                    creditsAmount: 0,
-                  );
-                }
+            ValueListenableBuilder(
+              valueListenable: Cart().credits,
+              builder: (context, value, child) {
+                return CreditsDisplay(
+                  creditsAmount: value,
+                );
               },
             ),
             const Align(
@@ -70,7 +56,24 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                 itemCount: Menu().creditMenuItems().length,
                 itemBuilder: (context, index) {
                   return CreditsShopComponent(
-                      item: Menu().creditMenuItems()[index]);
+                    item: Menu().creditMenuItems()[index],
+                    onPress: () {
+                      if (Cart().credits.value <
+                          Menu().creditMenuItems()[index].getCreditPrice) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                              "You do not have enough credits for this item!"),
+                          backgroundColor: dangerColor,
+                        ));
+                      } else {
+                        Cart().addCreditsItem(
+                            Menu().creditMenuItems()[index].getName);
+                        Cart().updateCredits(Cart().credits.value -
+                            Menu().creditMenuItems()[index].getCreditPrice);
+                      }
+                    },
+                  );
                 },
               ),
             )

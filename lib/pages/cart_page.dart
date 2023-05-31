@@ -43,26 +43,65 @@ class _CartPageState extends State<CartPage> {
             color: primaryColor,
           ),
           Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: Cart().getKeys().length,
-              itemBuilder: (context, index) {
-                return MenuItemWidget(
-                    menuItem:
-                        Menu().getMenuItemWithName(Cart().getKeys()[index]),
-                    cartMode: true,
-                    cartAmount: Cart().getItemAmount(Cart().getKeys()[index]),
-                    onPress: () {
-                      setState(() {
-                        Cart().reduceItemAmount(Cart().getKeys()[index]);
-                        if (Cart().getItemAmount(Cart().getKeys()[index]) ==
-                            0) {
-                          Cart().getKeys().removeAt(index);
-                        }
-                      });
-                    });
-              },
+            child: Column(
+              children: [
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: Cart().getKeys().length,
+                  itemBuilder: (context, index) {
+                    return MenuItemWidget(
+                        menuItem:
+                            Menu().getMenuItemWithName(Cart().getKeys()[index]),
+                        cartMode: true,
+                        cartAmount:
+                            Cart().getItemAmount(Cart().getKeys()[index]),
+                        onPress: () {
+                          setState(() {
+                            Cart().reduceItemAmount(Cart().getKeys()[index]);
+                            if (Cart().getItemAmount(Cart().getKeys()[index]) ==
+                                0) {
+                              Cart().getKeys().removeAt(index);
+                            }
+                          });
+                        });
+                  },
+                ),
+                (Cart().getCreditsItemLength() > 0)
+                    ? const Text("C R E D I T   I T E M S",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold))
+                    : Container(),
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: Cart().getCreditsKeys().length,
+                  itemBuilder: (context, index) {
+                    return MenuItemWidget(
+                        menuItem: Menu().getMenuItemWithName(
+                            Cart().getCreditsKeys()[index]),
+                        cartMode: true,
+                        cartAmount: Cart().getCreditsItemAmount(
+                            Cart().getCreditsKeys()[index]),
+                        onPress: () {
+                          setState(() {
+                            Cart().reduceCreditsItemAmount(Menu()
+                                .getMenuItemWithName(
+                                    Cart().getCreditsKeys()[index])
+                                .getName);
+
+                            Cart().updateCredits(Cart().credits.value +
+                                Menu()
+                                    .getMenuItemWithName(
+                                        Cart().getCreditsKeys()[index])
+                                    .getCreditPrice);
+                          });
+                        });
+                  },
+                ),
+              ],
             ),
           ),
           const Divider(

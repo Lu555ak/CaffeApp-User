@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/auth/forgot_password_page.dart';
 import 'package:caffe_app_user/custom/background.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -106,12 +107,21 @@ class _LoginPageState extends State<LoginPage> {
                     indent: 20,
                     endIndent: 20,
                   ),
-                  const Text("Forgot your password?",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: subColor2,
-                        fontSize: 12,
-                      )),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordPage()),
+                      );
+                    },
+                    child: const Text("Forgot your password?",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: subColor2,
+                          fontSize: 12,
+                        )),
+                  ),
                   ListTile(
                     leading: Checkbox(
                       value: _rememberMe,
@@ -136,10 +146,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_loginFormKey.currentState!.validate()) {
-                          await Auth().signIn(
+                          String? message = await Auth().signIn(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
+                          if (!mounted) return;
+                          (message == null) ? null : alert(context, message);
                         }
                       },
                       style: ButtonStyle(
@@ -161,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const RegistrationPage()),

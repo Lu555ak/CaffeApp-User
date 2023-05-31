@@ -150,6 +150,9 @@ class Cart {
       "accepted": false,
       "cart": _cart,
       "creditCart": _creditCart
-    }).then((value) => _cart.clear());
+    }).then((value) {
+      _cart.clear();
+      _creditCart.clear();
+    });
   }
 }

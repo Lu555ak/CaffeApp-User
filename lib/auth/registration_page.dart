@@ -6,8 +6,6 @@ import 'package:caffe_app_user/auth/auth.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:caffe_app_user/auth/login_page.dart';
-
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
@@ -151,10 +149,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_registerFormKey.currentState!.validate()) {
-                          await Auth().signUp(
+                          String? message = await Auth().signUp(
                               email: _emailController.text,
                               password: _passwordController.text,
                               username: _usernameController.text);
+
+                          if (!mounted) return;
+                          (message == null) ? null : alert(context, message);
+                          Navigator.pop(context);
                         }
                       },
                       style: ButtonStyle(
@@ -176,11 +178,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                      );
+                      Navigator.pop(context);
                     },
                     child: const Text("Have an account?",
                         textAlign: TextAlign.left,

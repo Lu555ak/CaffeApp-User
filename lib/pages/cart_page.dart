@@ -127,7 +127,8 @@ class _CartPageState extends State<CartPage> {
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {
-                      if (Cart().getKeys().isNotEmpty) {
+                      if (Cart().getKeys().isNotEmpty ||
+                          Cart().getCreditsKeys().isNotEmpty) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(

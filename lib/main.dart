@@ -32,14 +32,17 @@ class _MainAppState extends State<MainApp> {
         home: StreamBuilder(
           stream: Auth().userChanges,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const ManagerPage(
-                key: Key("ManagerPage"),
-              );
-            } else {
-              return const LoginPage(
-                key: Key("LoginPage"),
-              );
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const LoginPage();
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasData) {
+                  return const ManagerPage();
+                } else {
+                  return const LoginPage();
+                }
             }
           },
         ));

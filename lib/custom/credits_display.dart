@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:caffe_app_user/utility/constants.dart';
+
+class CreditsDisplay extends StatelessWidget {
+  const CreditsDisplay({
+    super.key,
+    required this.creditsAmount,
+  });
+
+  final int creditsAmount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0),
+        child: Container(
+          width: 350,
+          height: 100,
+          decoration: const BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(25))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "CREDITS",
+                  style: TextStyle(
+                      color: secondaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 30),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(
+                      color: secondaryColor,
+                      border: Border.all(color: secondaryColor, width: 3),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          creditsAmount.toString(),
+                          style: const TextStyle(
+                              color: shinyColor,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 35),
+                        ),
+                        const Icon(
+                          Icons.circle,
+                          color: shinyColor,
+                          size: 30,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

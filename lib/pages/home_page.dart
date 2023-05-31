@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<MenuItem> _featuredMenu = Menu().getFeaturedItems();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,14 +33,29 @@ class _HomePageState extends State<HomePage> {
               )),
           SizedBox(
             height: 250,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: _featuredMenu.length,
-              itemBuilder: (context, index) {
-                return FeaturedComponent(
-                  item: _featuredMenu[index],
-                );
+            child: FutureBuilder(
+              future: Menu().loadFromDatabase(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.active:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.done:
+                    var featuredMenu = Menu().getFeaturedItems();
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: featuredMenu.length,
+                      itemBuilder: (context, index) {
+                        return FeaturedComponent(
+                          item: featuredMenu[index],
+                        );
+                      },
+                    );
+                }
               },
             ),
           ),

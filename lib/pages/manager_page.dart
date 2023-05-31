@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/models/cart_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -8,7 +9,6 @@ import 'package:caffe_app_user/custom/app_bar.dart';
 import 'package:caffe_app_user/pages/home_page.dart';
 import 'package:caffe_app_user/pages/menu_page.dart';
 import 'package:caffe_app_user/pages/loyalty_page.dart';
-import 'package:caffe_app_user/pages/quiz_page.dart';
 import 'package:caffe_app_user/pages/cart_page.dart';
 
 import 'package:caffe_app_user/auth/auth.dart';
@@ -24,10 +24,10 @@ class ManagerPage extends StatefulWidget {
 class _ManagerPageState extends State<ManagerPage> {
   @override
   initState() {
-    setState(() {
-      Menu().loadFromDatabase();
-    });
     super.initState();
+
+    Cart().getRates();
+    setState(() {});
   }
 
   // Page navigation
@@ -43,7 +43,6 @@ class _ManagerPageState extends State<ManagerPage> {
     const HomePage(),
     const MenuPage(),
     const LoyaltyPage(),
-    const QuizPage(),
   ];
 
   @override

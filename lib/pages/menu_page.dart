@@ -60,21 +60,36 @@ class _MenuPageState extends State<MenuPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: Menu().getMenuLength,
-                itemBuilder: ((context, index) {
-                  if (searchBarFilter(Menu().getMenuItemAt(index).getName)) {
-                    return MenuItemWidget(
-                        menuItem: Menu().getMenuItemAt(index),
-                        onPress: () {
-                          _addToCart(index);
-                        });
-                  } else {
-                    return Container();
-                  }
-                })),
+            child: FutureBuilder(
+              future: Menu().loadFromDatabase(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.active:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.done:
+                    return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: Menu().getMenuLength,
+                        itemBuilder: ((context, index) {
+                          if (searchBarFilter(
+                              Menu().getMenuItemAt(index).getName)) {
+                            return MenuItemWidget(
+                                menuItem: Menu().getMenuItemAt(index),
+                                onPress: () {
+                                  _addToCart(index);
+                                });
+                          } else {
+                            return Container();
+                          }
+                        }));
+                }
+              },
+            ),
           )
         ],
       ),

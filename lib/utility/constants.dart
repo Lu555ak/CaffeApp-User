@@ -9,3 +9,4 @@ const subColor2 = Color.fromRGBO(109, 93, 110, 1);
 const neutralColor = Color.fromRGBO(169, 169, 169, 1);
 const dangerColor = Color.fromRGBO(220, 20, 60, 1);
 const successColor = Color.fromRGBO(73, 194, 87, 1);
+const shinyColor = Color.fromRGBO(224, 197, 42, 1);

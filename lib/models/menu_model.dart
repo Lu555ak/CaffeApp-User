@@ -16,15 +16,20 @@ class Menu {
   void addMenuItem(MenuItem menuItem) => _menu.add(menuItem);
   void clearMenu() => _menu.clear();
 
-  void loadFromDatabase() async {
+  List<MenuItem> creditMenuItems() {
+    return _menu.where((element) => element.getCreditPrice > 0).toList();
+  }
+
+  Future<int> loadFromDatabase() async {
     _menu.clear();
     var collection = FirebaseFirestore.instance.collection('menu');
     var querySnapshot = await collection.get();
     for (var queryDocumentSnapshot in querySnapshot.docs) {
       Map<String, dynamic> data = queryDocumentSnapshot.data();
-      addMenuItem(MenuItem(
-          data["name"], data["price"], data["discount"], data["featured"]));
+      addMenuItem(MenuItem(data["name"], data["price"], data["discount"],
+          data["featured"], data["creditPrice"]));
     }
+    return 1;
   }
 
   List<MenuItem> getFeaturedItems() {
@@ -44,8 +49,10 @@ class MenuItem {
   late double _priceDiscount;
   final int _discount;
   final bool _featured;
+  final int _creditPrice;
 
-  MenuItem(this._name, this._price, this._discount, this._featured) {
+  MenuItem(this._name, this._price, this._discount, this._featured,
+      this._creditPrice) {
     _priceDiscount = _price * (1 - _discount / 100);
   }
 
@@ -54,4 +61,5 @@ class MenuItem {
   double get getPriceDiscount => _priceDiscount;
   int get getDiscount => _discount;
   bool get getFeatured => _featured;
+  int get getCreditPrice => _creditPrice;
 }

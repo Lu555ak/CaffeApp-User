@@ -37,12 +37,6 @@ class MyBottomNavBar extends StatelessWidget {
               gap: 5,
               text: "Loyalty",
             ),
-            GButton(
-              icon: Icons.quiz_rounded,
-              iconSize: 25,
-              gap: 5,
-              text: "Quiz",
-            ),
           ]),
     );
   }

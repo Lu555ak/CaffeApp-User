@@ -17,20 +17,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  double cartTotal() {
-    double total = 0;
-    for (var cartItem in Cart().getKeys()) {
-      if (Menu().getMenuItemWithName(cartItem).getDiscount > 0) {
-        total += Menu().getMenuItemWithName(cartItem).getPriceDiscount *
-            Cart().getItemAmount(cartItem);
-      } else {
-        total += Menu().getMenuItemWithName(cartItem).getPrice *
-            Cart().getItemAmount(cartItem);
-      }
-    }
-    return total;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +80,7 @@ class _CartPageState extends State<CartPage> {
                           color: primaryColor,
                           fontSize: 26,
                           fontWeight: FontWeight.w900)),
-                  Text("${cartTotal().toStringAsFixed(2)}€",
+                  Text("${Cart().cartTotal().toStringAsFixed(2)}€",
                       style: const TextStyle(
                           color: primaryColor,
                           fontSize: 18,

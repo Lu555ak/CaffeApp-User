@@ -1,7 +1,6 @@
-import 'package:caffe_app_user/auth/auth.dart';
+import 'package:caffe_app_user/custom/no_data_widget.dart';
 import 'package:caffe_app_user/models/cart_model.dart';
 import 'package:caffe_app_user/utility/app_localizations.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -43,40 +42,50 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
             Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 15.0, bottom: 5, top: 20),
-                  child: Text(
-                      AppLocalizations.of(context)
-                          .translate("credit_shop_text"),
-                      style: const TextStyle(
-                          color: primaryColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900)),
+                  padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 20),
+                  child: Text(AppLocalizations.of(context).translate("credit_shop_text"),
+                      style: const TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.w900)),
                 )),
             SizedBox(
               height: 175,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: Menu().creditMenuItems().length,
-                itemBuilder: (context, index) {
-                  return CreditsShopComponent(
-                    item: Menu().creditMenuItems()[index],
-                    onPress: () {
-                      if (Cart().credits.value <
-                          Menu().creditMenuItems()[index].getCreditPrice) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(AppLocalizations.of(context)
-                              .translate("credit_shop_not_enough_credits")),
-                          backgroundColor: dangerColor,
-                        ));
+              child: FutureBuilder(
+                future: Menu().loadFromDatabase(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return const Center(child: CircularProgressIndicator());
+                    case ConnectionState.waiting:
+                      return const Center(child: CircularProgressIndicator());
+                    case ConnectionState.active:
+                      return const Center(child: CircularProgressIndicator());
+                    case ConnectionState.done:
+                      if (Menu().creditMenuItems().isNotEmpty) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Menu().creditMenuItems().length,
+                          itemBuilder: (context, index) {
+                            return CreditsShopComponent(
+                              item: Menu().creditMenuItems()[index],
+                              onPress: () {
+                                if (Cart().credits.value < Menu().creditMenuItems()[index].getCreditPrice) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content:
+                                        Text(AppLocalizations.of(context).translate("credit_shop_not_enough_credits")),
+                                    backgroundColor: dangerColor,
+                                  ));
+                                } else {
+                                  Cart().addCreditsItem(Menu().creditMenuItems()[index].getName);
+                                  Cart().updateCredits(
+                                      Cart().credits.value - Menu().creditMenuItems()[index].getCreditPrice);
+                                }
+                              },
+                            );
+                          },
+                        );
                       } else {
-                        Cart().addCreditsItem(
-                            Menu().creditMenuItems()[index].getName);
-                        Cart().updateCredits(Cart().credits.value -
-                            Menu().creditMenuItems()[index].getCreditPrice);
+                        return const NoDataWidget();
                       }
-                    },
-                  );
+                  }
                 },
               ),
             )

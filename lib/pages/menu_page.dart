@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/custom/menu_item.dart';
 import 'package:caffe_app_user/custom/circle_icon_button.dart';
+import 'package:caffe_app_user/custom/no_data_widget.dart';
 import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,7 @@ class _MenuPageState extends State<MenuPage> {
   final TextEditingController _searchBarController = TextEditingController();
 
   bool searchBarFilter(String input) {
-    String searchBarText =
-        _searchBarController.text.replaceAll(RegExp(r"\s+"), "").toLowerCase();
+    String searchBarText = _searchBarController.text.replaceAll(RegExp(r"\s+"), "").toLowerCase();
     String itemName = input.replaceAll(RegExp(r"\s+"), "").toLowerCase();
 
     if (searchBarText.isEmpty || itemName.contains(searchBarText)) {
@@ -43,8 +43,7 @@ class _MenuPageState extends State<MenuPage> {
             child: TextField(
               controller: _searchBarController,
               decoration: InputDecoration(
-                labelText:
-                    AppLocalizations.of(context).translate("search_text"),
+                labelText: AppLocalizations.of(context).translate("search_text"),
                 hintText: AppLocalizations.of(context).translate("search_text"),
                 prefixIcon: const Icon(Icons.search),
                 prefixIconColor: primaryColor,
@@ -73,22 +72,25 @@ class _MenuPageState extends State<MenuPage> {
                   case ConnectionState.active:
                     return const Center(child: CircularProgressIndicator());
                   case ConnectionState.done:
-                    return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: Menu().getMenuLength,
-                        itemBuilder: ((context, index) {
-                          if (searchBarFilter(
-                              Menu().getMenuItemAt(index).getName)) {
-                            return MenuItemWidget(
-                                menuItem: Menu().getMenuItemAt(index),
-                                onPress: () {
-                                  _addToCart(index);
-                                });
-                          } else {
-                            return Container();
-                          }
-                        }));
+                    if (Menu().getMenuLength > 0) {
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: Menu().getMenuLength,
+                          itemBuilder: ((context, index) {
+                            if (searchBarFilter(Menu().getMenuItemAt(index).getName)) {
+                              return MenuItemWidget(
+                                  menuItem: Menu().getMenuItemAt(index),
+                                  onPress: () {
+                                    _addToCart(index);
+                                  });
+                            } else {
+                              return Container();
+                            }
+                          }));
+                    } else {
+                      return const NoDataWidget();
+                    }
                 }
               },
             ),
@@ -103,15 +105,13 @@ class _MenuPageState extends State<MenuPage> {
 
     showModalBottomSheet(
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       context: context,
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setStateInner) {
             return Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
@@ -121,12 +121,8 @@ class _MenuPageState extends State<MenuPage> {
                       Text(
                         AppLocalizations.of(context).translate("add_text") +
                             Menu().getMenuItemAt(index).getName.toUpperCase() +
-                            AppLocalizations.of(context)
-                                .translate("to_cart_text"),
-                        style: const TextStyle(
-                            color: primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
+                            AppLocalizations.of(context).translate("to_cart_text"),
+                        style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -144,9 +140,7 @@ class _MenuPageState extends State<MenuPage> {
                                       iconData: Icons.remove,
                                       onPress: () {
                                         setStateInner(() {
-                                          (itemAmount > 0)
-                                              ? itemAmount--
-                                              : null;
+                                          (itemAmount > 0) ? itemAmount-- : null;
                                         });
                                       },
                                     )),
@@ -158,9 +152,7 @@ class _MenuPageState extends State<MenuPage> {
                                         itemAmount.toString(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w700),
+                                            color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700),
                                       ),
                                     )),
                                 Flexible(
@@ -182,41 +174,28 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                       SizedBox(
                         height: 25,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)
-                                    .translate("total_text"),
-                                style: const TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              Text(
-                                "${calculateMultiItemCost(itemAmount, index).toStringAsFixed(2)}€",
-                                style: const TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400),
-                              )
-                            ]),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          Text(
+                            AppLocalizations.of(context).translate("total_text"),
+                            style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            "${calculateMultiItemCost(itemAmount, index).toStringAsFixed(2)}€",
+                            style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w400),
+                          )
+                        ]),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: ElevatedButton(
                             style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(primaryColor),
+                              backgroundColor: MaterialStateProperty.all(primaryColor),
                             ),
                             onPressed: () {
-                              Cart().addItem(
-                                  Menu().getMenuItemAt(index).getName,
-                                  itemAmount);
+                              Cart().addItem(Menu().getMenuItemAt(index).getName, itemAmount);
                               Navigator.pop(context);
                             },
-                            child: Text(AppLocalizations.of(context)
-                                .translate("add_text_button"))),
+                            child: Text(AppLocalizations.of(context).translate("add_text_button"))),
                       ),
                     ],
                   ),

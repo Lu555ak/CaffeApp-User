@@ -7,7 +7,7 @@
 	"loyalty_text":"Vjernost",
 	"search_text":"Traži",
 	"cart_text":"K O Š A R I C A",
-	"total_text":"UKUPNO:",
+	"total_text":"UKUPNO: ",
 	"order_text":"NARUČI",
 	"road_map_text":"R O A D  M A P",
 	"add_text":"Dodaj ",
@@ -41,5 +41,8 @@
 	"auth_no_user_found" : "Račun nije nađen za uneseni email!",
 	"auth_wrong_password" : "Unesena je netočna zaporka!",
 	"default_error" : "Error",
-	"default_success" : "Uspjeh!"
+	"default_success" : "Uspjeh!",
+	"no_data" : "Trenutno nema dostupnih podataka!",
+	"motd_welcome" : "Dobrodošli u, ",
+	"motd_message" : "Uživajte u vašem piću!"
 }

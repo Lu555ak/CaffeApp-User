@@ -7,7 +7,7 @@
 	"loyalty_text":"Loyalty",
 	"search_text":"Search",
 	"cart_text":"C A R T",
-	"total_text":"TOTAL:",
+	"total_text":"TOTAL: ",
 	"order_text":"ORDER",
 	"road_map_text":"R O A D  M A P",
 	"add_text":"Add ",
@@ -41,5 +41,8 @@
 	"auth_no_user_found" : "No user found for that email.",
 	"auth_wrong_password" : "Wrong password provided for that user.",
 	"default_error" : "Error!",
-	"default_success" : "Success!"
+	"default_success" : "Success!",
+	"no_data" : "No items available currently!",
+	"motd_welcome" : "Welcome to, ",
+	"motd_message" : "Please enjoy your drink!"
 }

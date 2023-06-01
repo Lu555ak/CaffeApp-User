@@ -136,8 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_loginFormKey.currentState!.validate()) {
-                          String? message = await Auth().signIn(
-                              email: _emailController.text, password: _passwordController.text, context: context);
+                          String? message =
+                              await Auth().signIn(email: _emailController.text, password: _passwordController.text);
 
                           if (!mounted) return;
                           switch (message) {

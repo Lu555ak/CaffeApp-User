@@ -1,18 +1,12 @@
-import "package:caffe_app_user/utility/app_localizations.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:flutter/material.dart";
 
 class Auth {
   User? get currentUser => FirebaseAuth.instance.currentUser;
 
   Stream<User?> get userChanges => FirebaseAuth.instance.authStateChanges();
 
-  Future<String?> signUp(
-      {required BuildContext context,
-      required String email,
-      required String password,
-      required String username}) async {
+  Future<String?> signUp({required String email, required String password, required String username}) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     try {
@@ -32,7 +26,6 @@ class Auth {
   }
 
   Future<String?> signIn({
-    required BuildContext context,
     required String email,
     required String password,
   }) async {

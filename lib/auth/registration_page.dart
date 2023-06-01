@@ -141,10 +141,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       onPressed: () async {
                         if (_registerFormKey.currentState!.validate()) {
                           String? message = await Auth().signUp(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              username: _usernameController.text,
-                              context: context);
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            username: _usernameController.text,
+                          );
 
                           if (!mounted) return;
                           switch (message) {

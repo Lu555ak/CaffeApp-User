@@ -12,7 +12,6 @@ import 'package:caffe_app_user/pages/loyalty_page.dart';
 import 'package:caffe_app_user/pages/cart_page.dart';
 
 import 'package:caffe_app_user/auth/auth.dart';
-import 'package:caffe_app_user/models/menu_model.dart';
 
 class ManagerPage extends StatefulWidget {
   const ManagerPage({super.key});
@@ -52,8 +51,7 @@ class _ManagerPageState extends State<ManagerPage> {
         backgroundColor: secondaryColor,
         appBar: MyAppBar(
           onTapCart: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CartPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const CartPage()));
           },
           onTapLogout: () {
             Auth().signOut();

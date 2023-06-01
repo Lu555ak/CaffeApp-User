@@ -1,3 +1,5 @@
+import 'package:caffe_app_user/custom/motd_widget.dart';
+import 'package:caffe_app_user/custom/no_data_widget.dart';
 import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +27,8 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 15.0, bottom: 10, top: 10),
-                child: Text(
-                    AppLocalizations.of(context).translate("featured_text"),
-                    style: const TextStyle(
-                        color: primaryColor,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900)),
+                child: Text(AppLocalizations.of(context).translate("featured_text"),
+                    style: const TextStyle(color: primaryColor, fontSize: 24, fontWeight: FontWeight.w900)),
               )),
           SizedBox(
             height: 250,
@@ -46,20 +44,25 @@ class _HomePageState extends State<HomePage> {
                     return const Center(child: CircularProgressIndicator());
                   case ConnectionState.done:
                     var featuredMenu = Menu().getFeaturedItems();
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: featuredMenu.length,
-                      itemBuilder: (context, index) {
-                        return FeaturedComponent(
-                          item: featuredMenu[index],
-                        );
-                      },
-                    );
+                    if (featuredMenu.isNotEmpty) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: featuredMenu.length,
+                        itemBuilder: (context, index) {
+                          return FeaturedComponent(
+                            item: featuredMenu[index],
+                          );
+                        },
+                      );
+                    } else {
+                      return const NoDataWidget();
+                    }
                 }
               },
             ),
           ),
+          const MOTDWidget()
         ]),
       ),
     );

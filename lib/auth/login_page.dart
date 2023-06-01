@@ -29,8 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(children: [
         const Background(),
-        LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
+        LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
           double localWidth = 300;
           double localHeight = 550;
           if (constraints.maxWidth <= 320) localWidth = 220;
@@ -43,13 +42,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: primaryColor,
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: Offset(1, 1))
-                  ]),
+                  boxShadow: [BoxShadow(color: primaryColor, spreadRadius: 3, blurRadius: 4, offset: Offset(1, 1))]),
               child: Form(
                 key: _loginFormKey,
                 child: Column(children: [
@@ -57,10 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 35,
                   ),
                   Text(AppLocalizations.of(context).translate("login_text"),
-                      style: const TextStyle(
-                          color: primaryColor,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold)),
+                      style: const TextStyle(color: primaryColor, fontSize: 40, fontWeight: FontWeight.bold)),
                   const Divider(
                     color: primaryColor,
                     thickness: 8,
@@ -69,16 +59,16 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context).translate("email_text"),
                       ),
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter an email!";
+                          return AppLocalizations.of(context).translate("please_enter_an_email_text");
                         } else if (!isValidEmail(value)) {
-                          return "Please enter a valid email!";
+                          return AppLocalizations.of(context).translate("please_enter_a_valid_email");
                         }
                         return null;
                       }),
@@ -90,16 +80,16 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                       controller: _passwordController,
                       textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Password',
+                        hintText: AppLocalizations.of(context).translate("password_text"),
                       ),
                       autocorrect: false,
                       obscureText: true,
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter a password!";
+                          return AppLocalizations.of(context).translate("please_enter_a_password_text");
                         }
                         return null;
                       }),
@@ -112,13 +102,12 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordPage()),
+                        MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
                       );
                     },
-                    child: const Text("Forgot your password?",
+                    child: Text(AppLocalizations.of(context).translate("forgot_your_password_text"),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: subColor2,
                           fontSize: 12,
                         )),
@@ -134,9 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     horizontalTitleGap: 0,
-                    title: const Text("Remember me",
+                    title: Text(AppLocalizations.of(context).translate("remember_me_text"),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                         )),
@@ -148,21 +137,30 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         if (_loginFormKey.currentState!.validate()) {
                           String? message = await Auth().signIn(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
+                              email: _emailController.text, password: _passwordController.text, context: context);
+
                           if (!mounted) return;
-                          (message == null) ? null : alert(context, message);
+                          switch (message) {
+                            case "user-not-found":
+                              alert(context, "auth_no_user_found", dangerColor);
+                              break;
+                            case "wrong-password":
+                              alert(context, "auth_wrong_password", dangerColor);
+                              break;
+                            case null:
+                              alert(context, "default_success", successColor);
+                              break;
+                            default:
+                              alert(context, "default_error", dangerColor);
+                              break;
+                          }
                         }
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(const CircleBorder()),
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        backgroundColor:
-                            MaterialStateProperty.all(primaryColor),
-                        overlayColor:
-                            MaterialStateProperty.resolveWith<Color?>((states) {
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
+                        backgroundColor: MaterialStateProperty.all(primaryColor),
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                           if (states.contains(MaterialState.pressed)) {
                             return subColor;
                           }
@@ -176,13 +174,12 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegistrationPage()),
+                        MaterialPageRoute(builder: (context) => const RegistrationPage()),
                       );
                     },
-                    child: const Text("Don't have an account?",
+                    child: Text(AppLocalizations.of(context).translate("dont_have_an_account_text"),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: subColor2,
                           fontSize: 12,
                         )),

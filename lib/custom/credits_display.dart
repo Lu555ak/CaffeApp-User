@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 
@@ -23,11 +24,11 @@ class CreditsDisplay extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 20.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
-                  "CREDITS",
-                  style: TextStyle(
+                  AppLocalizations.of(context).translate("credits_text"),
+                  style: const TextStyle(
                       color: secondaryColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 30),

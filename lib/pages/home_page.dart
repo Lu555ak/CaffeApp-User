@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/custom/featured_component.dart';
@@ -20,12 +21,13 @@ class _HomePageState extends State<HomePage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          const Align(
+          Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 15.0, bottom: 10, top: 10),
-                child: Text("F E A T U R E D",
-                    style: TextStyle(
+                padding: const EdgeInsets.only(left: 15.0, bottom: 10, top: 10),
+                child: Text(
+                    AppLocalizations.of(context).translate("featured_text"),
+                    style: const TextStyle(
                         color: primaryColor,
                         fontSize: 24,
                         fontWeight: FontWeight.w900)),

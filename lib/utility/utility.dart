@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
+import 'app_localizations.dart';
 
 bool isValidEmail(String? email) {
   return RegExp(
@@ -8,9 +8,9 @@ bool isValidEmail(String? email) {
       .hasMatch(email ?? "");
 }
 
-void alert(BuildContext context, String message) {
+void alert(BuildContext context, String key, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(message),
-    backgroundColor: dangerColor,
+    content: Text(AppLocalizations.of(context).translate(key)),
+    backgroundColor: color,
   ));
 }

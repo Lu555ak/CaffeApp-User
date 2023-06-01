@@ -1,4 +1,5 @@
 import 'package:caffe_app_user/auth/auth.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -37,10 +38,11 @@ class ForgotPasswordPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(children: [
-                const Text(
-                    "Enter your email, you will receive password reset mail!",
+                Text(
+                    AppLocalizations.of(context)
+                        .translate("forgot_password_text"),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: primaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w500)),
@@ -50,16 +52,19 @@ class ForgotPasswordPage extends StatelessWidget {
                       controller: emailController,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Email',
+                        hintText: AppLocalizations.of(context)
+                            .translate("email_text"),
                       ),
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter an email!";
+                          return AppLocalizations.of(context)
+                              .translate("please_enter_an_email_text");
                         } else if (!isValidEmail(value)) {
-                          return "Please enter a valid email!";
+                          return AppLocalizations.of(context)
+                              .translate("please_enter_a_valid_email");
                         }
                         return null;
                       }),
@@ -86,8 +91,9 @@ class ForgotPasswordPage extends StatelessWidget {
                             return null;
                           }),
                         ),
-                        child: const Text("SEND",
-                            style: TextStyle(
+                        child: Text(
+                            AppLocalizations.of(context).translate("send_text"),
+                            style: const TextStyle(
                                 color: secondaryColor,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w600))),

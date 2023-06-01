@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/auth/auth.dart';
 import 'package:caffe_app_user/models/cart_model.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -39,14 +40,17 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                 );
               },
             ),
-            const Align(
+            Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 5, top: 20),
-                  child: Text("C R E D I T   S H O P",
-                      style: TextStyle(
+                  padding:
+                      const EdgeInsets.only(left: 15.0, bottom: 5, top: 20),
+                  child: Text(
+                      AppLocalizations.of(context)
+                          .translate("credit_shop_text"),
+                      style: const TextStyle(
                           color: primaryColor,
-                          fontSize: 24,
+                          fontSize: 22,
                           fontWeight: FontWeight.w900)),
                 )),
             SizedBox(
@@ -60,10 +64,9 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                     onPress: () {
                       if (Cart().credits.value <
                           Menu().creditMenuItems()[index].getCreditPrice) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text(
-                              "You do not have enough credits for this item!"),
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context)
+                              .translate("credit_shop_not_enough_credits")),
                           backgroundColor: dangerColor,
                         ));
                       } else {

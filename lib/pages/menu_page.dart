@@ -1,5 +1,6 @@
 import 'package:caffe_app_user/custom/menu_item.dart';
 import 'package:caffe_app_user/custom/circle_icon_button.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -41,16 +42,17 @@ class _MenuPageState extends State<MenuPage> {
             padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15),
             child: TextField(
               controller: _searchBarController,
-              decoration: const InputDecoration(
-                labelText: "Search",
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
+              decoration: InputDecoration(
+                labelText:
+                    AppLocalizations.of(context).translate("search_text"),
+                hintText: AppLocalizations.of(context).translate("search_text"),
+                prefixIcon: const Icon(Icons.search),
                 prefixIconColor: primaryColor,
-                labelStyle: TextStyle(color: primaryColor),
-                enabledBorder: OutlineInputBorder(
+                labelStyle: const TextStyle(color: primaryColor),
+                enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 2, color: subColor2),
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 4, color: subColor2),
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
               ),
@@ -117,7 +119,10 @@ class _MenuPageState extends State<MenuPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Add ${Menu().getMenuItemAt(index).getName.toUpperCase()} to cart!",
+                        AppLocalizations.of(context).translate("add_text") +
+                            Menu().getMenuItemAt(index).getName.toUpperCase() +
+                            AppLocalizations.of(context)
+                                .translate("to_cart_text"),
                         style: const TextStyle(
                             color: primaryColor,
                             fontSize: 18,
@@ -180,9 +185,10 @@ class _MenuPageState extends State<MenuPage> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
-                                "TOTAL: ",
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)
+                                    .translate("total_text"),
+                                style: const TextStyle(
                                     color: primaryColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700),
@@ -209,7 +215,8 @@ class _MenuPageState extends State<MenuPage> {
                                   itemAmount);
                               Navigator.pop(context);
                             },
-                            child: const Text('ADD')),
+                            child: Text(AppLocalizations.of(context)
+                                .translate("add_text_button"))),
                       ),
                     ],
                   ),

@@ -1,5 +1,7 @@
+import "package:caffe_app_user/utility/app_localizations.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 
 class Auth {
   User? get currentUser => FirebaseAuth.instance.currentUser;
@@ -7,7 +9,8 @@ class Auth {
   Stream<User?> get userChanges => FirebaseAuth.instance.authStateChanges();
 
   Future<String?> signUp(
-      {required String email,
+      {required BuildContext context,
+      required String email,
       required String password,
       required String username}) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -20,21 +23,16 @@ class Auth {
           )
           .then((value) => users.add({"uid": value.user?.uid, "credits": 0}));
       await FirebaseAuth.instance.currentUser?.updateDisplayName(username);
-      return 'Success';
+      return null;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      } else {
-        return e.message;
-      }
+      return e.code;
     } catch (e) {
       return e.toString();
     }
   }
 
   Future<String?> signIn({
+    required BuildContext context,
     required String email,
     required String password,
   }) async {
@@ -45,13 +43,7 @@ class Auth {
       );
       return null;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        return 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        return 'Wrong password provided for that user.';
-      } else {
-        return e.message;
-      }
+      return e.code;
     } catch (e) {
       return e.toString();
     }

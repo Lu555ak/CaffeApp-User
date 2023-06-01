@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -22,7 +23,8 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        title: const Text("Scan the QR code!"),
+        title: Text(
+            AppLocalizations.of(context).translate("scan_the_qr_code_text")),
         actions: [
           IconButton(
               onPressed: () => scannerControler.toggleTorch(),
@@ -90,9 +92,9 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
     try {
       Cart().commitOrder(int.parse(dataMap[1]));
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Order was successfull!"),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(AppLocalizations.of(context)
+            .translate("order_was_successfull_text")),
         backgroundColor: successColor,
       ));
       int count = 0;
@@ -101,8 +103,9 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       });
       return;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Error, there was an issue with sending your order!"),
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:
+            Text(AppLocalizations.of(context).translate("order_error_text")),
         backgroundColor: dangerColor,
       ));
       return;

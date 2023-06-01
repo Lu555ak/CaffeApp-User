@@ -1,4 +1,5 @@
 import 'package:caffe_app_user/custom/background.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:caffe_app_user/utility/utility.dart';
@@ -26,8 +27,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       resizeToAvoidBottomInset: false,
       body: Stack(children: [
         const Background(),
-        LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
+        LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
           double localWidth = 300;
           double localHeight = 550;
           if (constraints.maxWidth <= 320) localWidth = 220;
@@ -40,24 +40,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: primaryColor,
-                        spreadRadius: 3,
-                        blurRadius: 4,
-                        offset: Offset(1, 1))
-                  ]),
+                  boxShadow: [BoxShadow(color: primaryColor, spreadRadius: 3, blurRadius: 4, offset: Offset(1, 1))]),
               child: Form(
                 key: _registerFormKey,
                 child: Column(children: [
                   const SizedBox(
                     height: 35,
                   ),
-                  const Text("REGISTER",
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold)),
+                  Text(AppLocalizations.of(context).translate("register_text"),
+                      style: const TextStyle(color: primaryColor, fontSize: 40, fontWeight: FontWeight.bold)),
                   const Divider(
                     color: primaryColor,
                     thickness: 8,
@@ -66,17 +57,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'E-mail',
+                        hintText: AppLocalizations.of(context).translate("email_text"),
                       ),
                       autocorrect: false,
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter an email!";
+                          return AppLocalizations.of(context).translate("please_enter_an_email_text");
                         } else if (!isValidEmail(value)) {
-                          return "Please enter a valid email!";
+                          return AppLocalizations.of(context).translate("please_enter_a_valid_email");
                         }
                         return null;
                       }),
@@ -88,14 +79,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   TextFormField(
                       controller: _usernameController,
                       textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Username',
+                        hintText: AppLocalizations.of(context).translate("username_text"),
                       ),
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter an username!";
+                          return AppLocalizations.of(context).translate("please_enter_an_username_text");
                         }
                         return null;
                       }),
@@ -107,16 +98,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   TextFormField(
                       controller: _passwordController,
                       textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Password',
+                        hintText: AppLocalizations.of(context).translate("password_text"),
                       ),
                       autocorrect: false,
                       obscureText: true,
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter a password!";
+                          return AppLocalizations.of(context).translate("please_enter_a_password_text");
                         }
                         return null;
                       }),
@@ -136,9 +127,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       },
                     ),
                     horizontalTitleGap: 0,
-                    title: const Text("Remember me",
+                    title: Text(AppLocalizations.of(context).translate("remember_me_text"),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                         )),
@@ -152,21 +143,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           String? message = await Auth().signUp(
                               email: _emailController.text,
                               password: _passwordController.text,
-                              username: _usernameController.text);
+                              username: _usernameController.text,
+                              context: context);
 
                           if (!mounted) return;
-                          (message == null) ? null : alert(context, message);
-                          Navigator.pop(context);
+                          switch (message) {
+                            case "weak-password":
+                              alert(context, "auth_password_weak_text", dangerColor);
+                              break;
+                            case "email-already-in-use":
+                              alert(context, "auth_account_exists", dangerColor);
+                              break;
+                            case null:
+                              alert(context, "default_success", successColor);
+                              Navigator.pop(context);
+                              break;
+                            default:
+                              alert(context, "default_error", dangerColor);
+                              break;
+                          }
                         }
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(const CircleBorder()),
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        backgroundColor:
-                            MaterialStateProperty.all(primaryColor),
-                        overlayColor:
-                            MaterialStateProperty.resolveWith<Color?>((states) {
+                        padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
+                        backgroundColor: MaterialStateProperty.all(primaryColor),
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                           if (states.contains(MaterialState.pressed)) {
                             return subColor;
                           }
@@ -180,9 +182,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("Have an account?",
+                    child: Text(AppLocalizations.of(context).translate("have_an_account_text"),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: subColor2,
                           fontSize: 12,
                         )),

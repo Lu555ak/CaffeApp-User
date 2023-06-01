@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -24,17 +25,13 @@ class _CartPageState extends State<CartPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon:
-              const Icon(Icons.arrow_back_ios_new_rounded, color: primaryColor),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: primaryColor),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text("C A R T",
-            style: TextStyle(
-                color: primaryColor,
-                fontSize: 25,
-                fontWeight: FontWeight.bold)),
+        title:
+            Text(AppLocalizations.of(context).translate("cart_text"), style: const TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
@@ -51,16 +48,13 @@ class _CartPageState extends State<CartPage> {
                   itemCount: Cart().getKeys().length,
                   itemBuilder: (context, index) {
                     return MenuItemWidget(
-                        menuItem:
-                            Menu().getMenuItemWithName(Cart().getKeys()[index]),
+                        menuItem: Menu().getMenuItemWithName(Cart().getKeys()[index]),
                         cartMode: true,
-                        cartAmount:
-                            Cart().getItemAmount(Cart().getKeys()[index]),
+                        cartAmount: Cart().getItemAmount(Cart().getKeys()[index]),
                         onPress: () {
                           setState(() {
                             Cart().reduceItemAmount(Cart().getKeys()[index]);
-                            if (Cart().getItemAmount(Cart().getKeys()[index]) ==
-                                0) {
+                            if (Cart().getItemAmount(Cart().getKeys()[index]) == 0) {
                               Cart().getKeys().removeAt(index);
                             }
                           });
@@ -68,11 +62,8 @@ class _CartPageState extends State<CartPage> {
                   },
                 ),
                 (Cart().getCreditsItemLength() > 0)
-                    ? const Text("C R E D I T   I T E M S",
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold))
+                    ? Text(AppLocalizations.of(context).translate("credits_items_text"),
+                        style: const TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.bold))
                     : Container(),
                 ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -80,23 +71,13 @@ class _CartPageState extends State<CartPage> {
                   itemCount: Cart().getCreditsKeys().length,
                   itemBuilder: (context, index) {
                     return MenuItemWidget(
-                        menuItem: Menu().getMenuItemWithName(
-                            Cart().getCreditsKeys()[index]),
+                        menuItem: Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]),
                         cartMode: true,
-                        cartAmount: Cart().getCreditsItemAmount(
-                            Cart().getCreditsKeys()[index]),
+                        cartAmount: Cart().getCreditsItemAmount(Cart().getCreditsKeys()[index]),
                         onPress: () {
                           setState(() {
-                            Cart().reduceCreditsItemAmount(Menu()
-                                .getMenuItemWithName(
-                                    Cart().getCreditsKeys()[index])
-                                .getName);
-
-                            Cart().updateCredits(Cart().credits.value +
-                                Menu()
-                                    .getMenuItemWithName(
-                                        Cart().getCreditsKeys()[index])
-                                    .getCreditPrice);
+                            Cart().reduceCreditsItemAmount(Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getName);
+                            Cart().updateCredits(Cart().credits.value + Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getCreditPrice);
                           });
                         });
                   },
@@ -114,51 +95,34 @@ class _CartPageState extends State<CartPage> {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
                 children: [
-                  const Text("TOTAL: ",
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 26,
-                          fontWeight: FontWeight.w900)),
-                  Text("${Cart().cartTotal().toStringAsFixed(2)}€",
-                      style: const TextStyle(
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500)),
+                  Text(AppLocalizations.of(context).translate("total_text"),
+                      style: const TextStyle(color: primaryColor, fontSize: 26, fontWeight: FontWeight.w900)),
+                  Text("${Cart().cartTotal().toStringAsFixed(2)}€", style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w500)),
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {
-                      if (Cart().getKeys().isNotEmpty ||
-                          Cart().getCreditsKeys().isNotEmpty) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const QRCodeScanner()));
+                      if (Cart().getKeys().isNotEmpty || Cart().getCreditsKeys().isNotEmpty) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScanner()));
                       } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content:
-                              Text("Please add items to your cart to order!"),
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(AppLocalizations.of(context).translate("please_add_items_to_cart_text")),
                           backgroundColor: dangerColor,
                         ));
                       }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(primaryColor),
-                      overlayColor:
-                          MaterialStateProperty.resolveWith<Color?>((states) {
+                      overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
                         if (states.contains(MaterialState.pressed)) {
                           return subColor2;
                         }
                         return null;
                       }),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("ORDER",
-                          style: TextStyle(
-                              color: secondaryColor,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(AppLocalizations.of(context).translate("order_text"),
+                          style: const TextStyle(color: secondaryColor, fontSize: 22, fontWeight: FontWeight.w900)),
                     ),
                   ),
                 ],

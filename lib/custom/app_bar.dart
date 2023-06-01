@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -57,9 +58,9 @@ class _MyAppBarState extends State<MyAppBar> {
                     color: secondaryColor,
                     size: 35,
                   )),
-              title: const Text(
-                "Logged in as ",
-                style: TextStyle(color: secondaryColor, fontSize: 20),
+              title: Text(
+                AppLocalizations.of(context).translate("logged_in_as_text"),
+                style: const TextStyle(color: secondaryColor, fontSize: 20),
               ),
               subtitle: Text(widget.username,
                   style: const TextStyle(

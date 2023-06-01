@@ -1,4 +1,5 @@
 import 'package:caffe_app_user/custom/circle_icon_button.dart';
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:caffe_app_user/utility/constants.dart';
@@ -73,11 +74,12 @@ class CreditsShopComponent extends StatelessWidget {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Align(
+                          Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Price:",
-                              style: TextStyle(
+                              AppLocalizations.of(context)
+                                  .translate("price_text"),
+                              style: const TextStyle(
                                   color: secondaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700),

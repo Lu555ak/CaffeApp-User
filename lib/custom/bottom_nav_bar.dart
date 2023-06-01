@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:caffe_app_user/utility/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -18,24 +19,24 @@ class MyBottomNavBar extends StatelessWidget {
           color: neutralColor,
           tabBorderRadius: 20,
           tabActiveBorder: Border.all(color: primaryColor, width: 4),
-          tabs: const [
+          tabs: [
             GButton(
               icon: Icons.home_rounded,
               iconSize: 25,
               gap: 5,
-              text: "Home",
+              text: AppLocalizations.of(context).translate("home_text"),
             ),
             GButton(
               icon: Icons.menu_book_rounded,
               iconSize: 25,
               gap: 5,
-              text: "Menu",
+              text: AppLocalizations.of(context).translate("menu_text"),
             ),
             GButton(
               icon: Icons.loyalty_rounded,
               iconSize: 25,
               gap: 5,
-              text: "Loyalty",
+              text: AppLocalizations.of(context).translate("loyalty_text"),
             ),
           ]),
     );

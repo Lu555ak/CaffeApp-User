@@ -20,7 +20,6 @@ class LoyaltyPage extends StatefulWidget {
 class _LoyaltyPageState extends State<LoyaltyPage> {
   @override
   void initState() {
-    Cart().fetchCredits();
     super.initState();
   }
 

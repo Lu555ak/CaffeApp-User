@@ -39,16 +39,6 @@ class Cart {
     credits.value = credit;
   }
 
-  Future<void> fetchCredits() async {
-    var value = await FirebaseFirestore.instance
-        .collection('users')
-        .where('uid', isEqualTo: Auth().currentUser?.uid)
-        .limit(1)
-        .get();
-    var data = value.docs.first.data();
-    credits.value = data["credits"];
-  }
-
   void addItem(String item, int amount) {
     if (amount == 0) return;
     if (_cart[item] == null) {

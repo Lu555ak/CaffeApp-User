@@ -18,6 +18,7 @@ class Cart {
   ValueNotifier<int> credits = ValueNotifier(0);
   int euroRate = 1;
   int creditsRate = 1;
+  DatabaseReference? lastOrder;
 
   void getRates() async {
     final ref = FirebaseDatabase.instance.ref();
@@ -142,6 +143,7 @@ class Cart {
 
     final DatabaseReference orderRef = database.ref("orders/order$orderNumber");
     await orderRef.set({"table": tableId, "accepted": false, "cart": _cart, "creditCart": _creditCart}).then((value) {
+      lastOrder = orderRef;
       _cart.clear();
       _creditCart.clear();
     });

@@ -1,3 +1,4 @@
+import 'package:caffe_app_user/models/cart_model.dart';
 import 'package:caffe_app_user/utility/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -61,17 +62,57 @@ class _MyAppBarState extends State<MyAppBar> {
               horizontalTitleGap: 20,
               trailing: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: IconButton(
-                    onPressed: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        widget.onTapCart();
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.shopping_bag_rounded,
-                      color: primaryColor,
-                      size: 35,
-                    )),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    StreamBuilder(
+                      stream: Cart().lastOrder?.onValue,
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.active:
+                            if (snapshot.data!.snapshot.child("accepted").value == false) {
+                              return const Center(
+                                  child: Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                                child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: primaryColor,
+                                  ),
+                                ),
+                              ));
+                            } else if (snapshot.data!.snapshot.child("accepted").value == true) {
+                              return const Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: Icon(
+                                  Icons.check_circle_outlined,
+                                  color: successColor,
+                                  size: 30,
+                                ),
+                              );
+                            }
+                            break;
+                          default:
+                            return Container();
+                        }
+
+                        return Container();
+                      },
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            widget.onTapCart();
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.shopping_bag_rounded,
+                          color: primaryColor,
+                          size: 35,
+                        )),
+                  ],
+                ),
               ),
             )
           ],

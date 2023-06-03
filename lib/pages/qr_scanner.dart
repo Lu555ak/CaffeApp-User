@@ -18,6 +18,13 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   bool barcodeScanned = false;
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

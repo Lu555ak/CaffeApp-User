@@ -8,11 +8,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Function onTapLogout;
   final String username;
 
-  const MyAppBar(
-      {super.key,
-      required this.onTapCart,
-      required this.onTapLogout,
-      this.username = "User"});
+  const MyAppBar({super.key, required this.onTapCart, required this.onTapLogout, this.username = "User"});
 
   @override
   State<MyAppBar> createState() => _MyAppBarState();
@@ -26,14 +22,12 @@ class _MyAppBarState extends State<MyAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: secondaryColor,
+      backgroundColor: Colors.transparent,
       toolbarHeight: 100,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25)),
+          color: subColor,
+          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
           boxShadow: [
             BoxShadow(
               color: subColor2.withOpacity(0.5),
@@ -55,18 +49,15 @@ class _MyAppBarState extends State<MyAppBar> {
                   },
                   icon: const Icon(
                     Icons.login_rounded,
-                    color: secondaryColor,
+                    color: subColor2,
                     size: 35,
                   )),
               title: Text(
                 AppLocalizations.of(context).translate("logged_in_as_text"),
-                style: const TextStyle(color: secondaryColor, fontSize: 20),
+                style: const TextStyle(color: subColor2, fontSize: 20),
               ),
               subtitle: Text(widget.username,
-                  style: const TextStyle(
-                      color: secondaryColor,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold)),
+                  style: const TextStyle(color: subColor2, fontSize: 25, fontWeight: FontWeight.bold)),
               horizontalTitleGap: 20,
               trailing: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
@@ -78,7 +69,7 @@ class _MyAppBarState extends State<MyAppBar> {
                     },
                     icon: const Icon(
                       Icons.shopping_bag_rounded,
-                      color: secondaryColor,
+                      color: primaryColor,
                       size: 35,
                     )),
               ),

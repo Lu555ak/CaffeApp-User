@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 15.0, bottom: 10, top: 10),
                 child: Text(AppLocalizations.of(context).translate("featured_text"),
-                    style: const TextStyle(color: primaryColor, fontSize: 24, fontWeight: FontWeight.w900)),
+                    style: const TextStyle(color: subColor2, fontSize: 24, fontWeight: FontWeight.w900)),
               )),
           SizedBox(
             height: 250,

@@ -16,7 +16,7 @@ class MOTDWidget extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: primaryColor,
+              color: subColor,
               borderRadius: const BorderRadius.all(Radius.circular(25)),
               boxShadow: [
                 BoxShadow(
@@ -36,11 +36,11 @@ class MOTDWidget extends StatelessWidget {
                       children: [
                         Text(
                           AppLocalizations.of(context).translate("motd_welcome"),
-                          style: const TextStyle(color: secondaryColor, fontSize: 20, fontWeight: FontWeight.w400),
+                          style: const TextStyle(color: subColor2, fontSize: 20, fontWeight: FontWeight.w400),
                         ),
                         const Text(
                           "CaffeApp!",
-                          style: TextStyle(color: secondaryColor, fontSize: 20, fontWeight: FontWeight.w700),
+                          style: TextStyle(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -49,14 +49,14 @@ class MOTDWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10.0, left: 8.0),
                     child: Text(
                       AppLocalizations.of(context).translate("motd_message"),
-                      style: const TextStyle(color: secondaryColor, fontSize: 17, fontWeight: FontWeight.w400),
+                      style: const TextStyle(color: subColor2, fontSize: 17, fontWeight: FontWeight.w400),
                     ),
                   ),
                   trailing: const Padding(
                     padding: EdgeInsets.only(right: 15.0),
                     child: Icon(
                       Icons.local_drink_outlined,
-                      color: secondaryColor,
+                      color: subColor2,
                       size: 60,
                     ),
                   )),

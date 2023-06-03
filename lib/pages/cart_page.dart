@@ -30,8 +30,8 @@ class _CartPageState extends State<CartPage> {
             Navigator.pop(context);
           },
         ),
-        title:
-            Text(AppLocalizations.of(context).translate("cart_text"), style: const TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.bold)),
+        title: Text(AppLocalizations.of(context).translate("cart_text"),
+            style: const TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
@@ -76,8 +76,10 @@ class _CartPageState extends State<CartPage> {
                         cartAmount: Cart().getCreditsItemAmount(Cart().getCreditsKeys()[index]),
                         onPress: () {
                           setState(() {
-                            Cart().reduceCreditsItemAmount(Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getName);
-                            Cart().updateCredits(Cart().credits.value + Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getCreditPrice);
+                            Cart().updateCredits(Cart().credits.value +
+                                Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getCreditPrice);
+                            Cart().reduceCreditsItemAmount(
+                                Menu().getMenuItemWithName(Cart().getCreditsKeys()[index]).getName);
                           });
                         });
                   },
@@ -97,7 +99,8 @@ class _CartPageState extends State<CartPage> {
                 children: [
                   Text(AppLocalizations.of(context).translate("total_text"),
                       style: const TextStyle(color: primaryColor, fontSize: 26, fontWeight: FontWeight.w900)),
-                  Text("${Cart().cartTotal().toStringAsFixed(2)}€", style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w500)),
+                  Text("${Cart().cartTotal().toStringAsFixed(2)}€",
+                      style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w500)),
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {

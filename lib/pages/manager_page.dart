@@ -24,7 +24,6 @@ class _ManagerPageState extends State<ManagerPage> {
   @override
   initState() {
     super.initState();
-
     Cart().getRates();
     setState(() {});
   }
@@ -33,6 +32,7 @@ class _ManagerPageState extends State<ManagerPage> {
   int _selectedIndex = 0;
   navigateBottomBar(int index) {
     setState(() {
+      Cart().getCredits();
       _selectedIndex = index;
     });
   }

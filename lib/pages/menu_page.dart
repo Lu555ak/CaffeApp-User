@@ -46,8 +46,8 @@ class _MenuPageState extends State<MenuPage> {
                 labelText: AppLocalizations.of(context).translate("search_text"),
                 hintText: AppLocalizations.of(context).translate("search_text"),
                 prefixIcon: const Icon(Icons.search),
-                prefixIconColor: primaryColor,
-                labelStyle: const TextStyle(color: primaryColor),
+                prefixIconColor: subColor2,
+                labelStyle: const TextStyle(color: subColor2),
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 2, color: subColor2),
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
@@ -122,7 +122,7 @@ class _MenuPageState extends State<MenuPage> {
                         AppLocalizations.of(context).translate("add_text") +
                             Menu().getMenuItemAt(index).getName.toUpperCase() +
                             AppLocalizations.of(context).translate("to_cart_text"),
-                        style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
+                        style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w700),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -138,6 +138,7 @@ class _MenuPageState extends State<MenuPage> {
                                     flex: 1,
                                     child: CircleIconButton(
                                       iconData: Icons.remove,
+                                      pressColor: secondaryColor,
                                       onPress: () {
                                         setStateInner(() {
                                           (itemAmount > 0) ? itemAmount-- : null;
@@ -159,6 +160,7 @@ class _MenuPageState extends State<MenuPage> {
                                     flex: 1,
                                     child: CircleIconButton(
                                       iconData: Icons.add,
+                                      pressColor: secondaryColor,
                                       onPress: () {
                                         setStateInner(() {
                                           itemAmount++;
@@ -177,11 +179,11 @@ class _MenuPageState extends State<MenuPage> {
                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Text(
                             AppLocalizations.of(context).translate("total_text"),
-                            style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
+                            style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w700),
                           ),
                           Text(
                             "${calculateMultiItemCost(itemAmount, index).toStringAsFixed(2)}€",
-                            style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w400),
+                            style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w400),
                           )
                         ]),
                       ),

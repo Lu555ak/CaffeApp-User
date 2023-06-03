@@ -18,7 +18,7 @@ class FeaturedComponent extends StatelessWidget {
       child: Container(
         width: 150,
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: subColor,
           borderRadius: const BorderRadius.all(Radius.circular(25)),
           boxShadow: [
             BoxShadow(
@@ -39,9 +39,7 @@ class FeaturedComponent extends StatelessWidget {
                     height: double.infinity,
                     decoration: const BoxDecoration(
                       color: secondaryColor,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15)),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -51,10 +49,7 @@ class FeaturedComponent extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               item.getName,
-                              style: const TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
+                              style: const TextStyle(color: subColor2, fontSize: 20, fontWeight: FontWeight.w700),
                             ),
                           ),
                           Expanded(
@@ -77,10 +72,7 @@ class FeaturedComponent extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       AppLocalizations.of(context).translate("price_text"),
-                      style: const TextStyle(
-                          color: secondaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: subColor2, fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Align(
@@ -89,7 +81,7 @@ class FeaturedComponent extends StatelessWidget {
                         ? Text(
                             "${item.getPrice.toStringAsFixed(2)}€",
                             style: const TextStyle(
-                                color: secondaryColor,
+                                color: subColor2,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.lineThrough,
@@ -98,7 +90,7 @@ class FeaturedComponent extends StatelessWidget {
                         : Text(
                             "${item.getPrice.toStringAsFixed(2)}€",
                             style: const TextStyle(
-                              color: secondaryColor,
+                              color: subColor2,
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
@@ -106,7 +98,7 @@ class FeaturedComponent extends StatelessWidget {
                   ),
                   (item.getDiscount > 0)
                       ? const Divider(
-                          color: secondaryColor,
+                          color: subColor2,
                           thickness: 1,
                         )
                       : Container(),

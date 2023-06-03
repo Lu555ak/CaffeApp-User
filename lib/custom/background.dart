@@ -1,10 +1,8 @@
+import 'package:caffe_app_user/utility/constants.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
-  const Background(
-      {super.key,
-      this.opacity = 1,
-      this.color = const Color.fromRGBO(34, 31, 32, 1)});
+  const Background({super.key, this.opacity = 1, this.color = const Color.fromRGBO(34, 31, 32, 1)});
 
   final double opacity;
   final Color color;
@@ -16,11 +14,11 @@ class Background extends StatelessWidget {
       Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: const AssetImage("images/backgroundImage.png"),
-            scale: 1.5,
-            repeat: ImageRepeat.repeat,
-            opacity: opacity,
-          ),
+              image: const AssetImage("images/backgroundImage.png"),
+              scale: 1.5,
+              repeat: ImageRepeat.repeat,
+              opacity: opacity,
+              colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcATop)),
         ),
       ),
     ]);

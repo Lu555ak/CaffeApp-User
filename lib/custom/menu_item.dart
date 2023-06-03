@@ -11,11 +11,7 @@ class MenuItemWidget extends StatelessWidget {
   final MenuItem menuItem;
   final Function onPress;
   const MenuItemWidget(
-      {super.key,
-      required this.menuItem,
-      required this.onPress,
-      this.cartMode = false,
-      this.cartAmount = 0});
+      {super.key, required this.menuItem, required this.onPress, this.cartMode = false, this.cartAmount = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -24,42 +20,31 @@ class MenuItemWidget extends StatelessWidget {
           children: [
             Text(
               menuItem.getName.toUpperCase(),
-              style: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900),
+              style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w900),
             ),
             Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: DiscountComponent(discount: menuItem.getDiscount))
+                padding: const EdgeInsets.only(left: 15.0), child: DiscountComponent(discount: menuItem.getDiscount))
           ],
         ),
         subtitle: (menuItem.getDiscount == 0)
             ? Text(
                 "${menuItem.getPrice}€",
-                style: const TextStyle(
-                    color: primaryColor,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400),
+                style: const TextStyle(color: subColor2, fontSize: 15, fontWeight: FontWeight.w400),
               )
             : Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text("${menuItem.getPrice}€",
                       style: const TextStyle(
-                          color: primaryColor,
+                          color: subColor2,
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           decoration: TextDecoration.lineThrough,
                           decorationThickness: 3)),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                        "${menuItem.getPriceDiscount.toStringAsFixed(2)}€",
-                        style: const TextStyle(
-                            color: dangerColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500)),
+                    child: Text("${menuItem.getPriceDiscount.toStringAsFixed(2)}€",
+                        style: const TextStyle(color: dangerColor, fontSize: 15, fontWeight: FontWeight.w500)),
                   )
                 ],
               ),
@@ -68,13 +53,8 @@ class MenuItemWidget extends StatelessWidget {
           children: [
             (cartMode)
                 ? Text(cartAmount.toString(),
-                    style: const TextStyle(
-                        color: primaryColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w700))
-                : ((menuItem.getFeatured)
-                    ? const Icon(Icons.star)
-                    : Container()),
+                    style: const TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700))
+                : ((menuItem.getFeatured) ? const Icon(Icons.star) : Container()),
             CircleIconButton(
               iconData: (cartMode) ? Icons.remove : Icons.add,
               onPress: () {

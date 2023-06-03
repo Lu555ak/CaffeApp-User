@@ -18,9 +18,18 @@ class CreditsDisplay extends StatelessWidget {
         child: Container(
           width: 350,
           height: 100,
-          decoration: const BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(25))),
+          decoration: BoxDecoration(
+            color: subColor,
+            borderRadius: const BorderRadius.all(Radius.circular(25)),
+            boxShadow: [
+              BoxShadow(
+                color: subColor2.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(-5, 5),
+              ),
+            ],
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -28,10 +37,7 @@ class CreditsDisplay extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
                   AppLocalizations.of(context).translate("credits_text"),
-                  style: const TextStyle(
-                      color: secondaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 30),
+                  style: const TextStyle(color: subColor2, fontWeight: FontWeight.w600, fontSize: 30),
                 ),
               ),
               Padding(
@@ -41,18 +47,14 @@ class CreditsDisplay extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: secondaryColor,
                       border: Border.all(color: secondaryColor, width: 3),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(15))),
+                      borderRadius: const BorderRadius.all(Radius.circular(15))),
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Row(
                       children: [
                         Text(
                           creditsAmount.toString(),
-                          style: const TextStyle(
-                              color: shinyColor,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 35),
+                          style: const TextStyle(color: shinyColor, fontWeight: FontWeight.w800, fontSize: 35),
                         ),
                         const Icon(
                           Icons.circle,

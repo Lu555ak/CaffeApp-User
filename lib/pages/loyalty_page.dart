@@ -43,25 +43,28 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15.0, bottom: 5, top: 20),
                   child: Text(AppLocalizations.of(context).translate("credit_shop_text"),
-                      style: const TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.w900)),
+                      style: const TextStyle(color: subColor2, fontSize: 22, fontWeight: FontWeight.w900)),
                 )),
-            SizedBox(
-              height: 175,
-              child: FutureBuilder(
-                future: Menu().loadFromDatabase(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return const Center(child: CircularProgressIndicator());
-                    case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
-                    case ConnectionState.active:
-                      return const Center(child: CircularProgressIndicator());
-                    case ConnectionState.done:
-                      if (Menu().creditMenuItems().isNotEmpty) {
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
+            FutureBuilder(
+              future: Menu().loadFromDatabase(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.active:
+                    return const Center(child: CircularProgressIndicator());
+                  case ConnectionState.done:
+                    if (Menu().creditMenuItems().isNotEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
                           itemCount: Menu().creditMenuItems().length,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
                           itemBuilder: (context, index) {
                             return CreditsShopComponent(
                               item: Menu().creditMenuItems()[index],
@@ -80,13 +83,13 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                               },
                             );
                           },
-                        );
-                      } else {
-                        return const NoDataWidget();
-                      }
-                  }
-                },
-              ),
+                        ),
+                      );
+                    } else {
+                      return const NoDataWidget();
+                    }
+                }
+              },
             )
           ],
         ),

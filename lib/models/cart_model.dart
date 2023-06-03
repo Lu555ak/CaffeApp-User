@@ -28,10 +28,19 @@ class Cart {
     }
   }
 
+  void getCredits() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    var user = users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();
+
+    user.then((value) {
+      var d = value.docs[0].data() as Map<String, dynamic>;
+      credits.value = d["credits"];
+    });
+  }
+
   void updateCredits(int credit) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    var user =
-        users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();
+    var user = users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();
 
     user.then((value) {
       value.docs[0].reference.update({"credits": credit});
@@ -86,11 +95,9 @@ class Cart {
     double total = 0;
     for (var cartItem in Cart().getKeys()) {
       if (Menu().getMenuItemWithName(cartItem).getDiscount > 0) {
-        total += Menu().getMenuItemWithName(cartItem).getPriceDiscount *
-            Cart().getItemAmount(cartItem);
+        total += Menu().getMenuItemWithName(cartItem).getPriceDiscount * Cart().getItemAmount(cartItem);
       } else {
-        total += Menu().getMenuItemWithName(cartItem).getPrice *
-            Cart().getItemAmount(cartItem);
+        total += Menu().getMenuItemWithName(cartItem).getPrice * Cart().getItemAmount(cartItem);
       }
     }
     return total;
@@ -125,22 +132,16 @@ class Cart {
     }
 
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    var user =
-        users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();
+    var user = users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();
 
     await user.then((value) {
       var creditData = value.docs[0].data() as Map<String, dynamic>;
-      value.docs[0].reference
-          .update({"credits": (creditData["credits"] + pointsTotal)});
-    });
+      value.docs[0].reference.update({"credits": (creditData["credits"] + pointsTotal)});
+      credits.value = creditData["credits"] + pointsTotal;
+    }).then((value) => getCredits());
 
     final DatabaseReference orderRef = database.ref("orders/order$orderNumber");
-    await orderRef.set({
-      "table": tableId,
-      "accepted": false,
-      "cart": _cart,
-      "creditCart": _creditCart
-    }).then((value) {
+    await orderRef.set({"table": tableId, "accepted": false, "cart": _cart, "creditCart": _creditCart}).then((value) {
       _cart.clear();
       _creditCart.clear();
     });

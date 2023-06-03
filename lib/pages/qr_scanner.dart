@@ -23,8 +23,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        title: Text(
-            AppLocalizations.of(context).translate("scan_the_qr_code_text")),
+        title: Text(AppLocalizations.of(context).translate("scan_the_qr_code_text")),
         actions: [
           IconButton(
               onPressed: () => scannerControler.toggleTorch(),
@@ -63,11 +62,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
           var value = barcodes[0].rawValue;
 
           if (value != null) {
-            value = value
-                .replaceAll(' ', '')
-                .replaceAll("'", "")
-                .replaceAll("{", "")
-                .replaceAll("}", "");
+            value = value.replaceAll(' ', '').replaceAll("'", "").replaceAll("{", "").replaceAll("}", "");
           }
 
           _makeOrder(value ?? "empty");
@@ -93,19 +88,14 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     try {
       Cart().commitOrder(int.parse(dataMap[1]));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)
-            .translate("order_was_successfull_text")),
+        content: Text(AppLocalizations.of(context).translate("order_was_successfull_text")),
         backgroundColor: successColor,
       ));
-      int count = 0;
-      Navigator.popUntil(context, (route) {
-        return count++ == 1;
-      });
+      Navigator.of(context).pop();
       return;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content:
-            Text(AppLocalizations.of(context).translate("order_error_text")),
+        content: Text(AppLocalizations.of(context).translate("order_error_text")),
         backgroundColor: dangerColor,
       ));
       return;

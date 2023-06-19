@@ -31,13 +31,13 @@ class _CartPageState extends State<CartPage> {
           },
         ),
         title: Text(AppLocalizations.of(context).translate("cart_text"),
-            style: const TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.bold)),
+            style: const TextStyle(color: subColor2, fontSize: 25, fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
           const Divider(
             thickness: 3,
-            color: primaryColor,
+            color: subColor2,
           ),
           Expanded(
             child: Column(
@@ -89,7 +89,7 @@ class _CartPageState extends State<CartPage> {
           ),
           const Divider(
             thickness: 3,
-            color: primaryColor,
+            color: subColor2,
           ),
           SizedBox(
             height: 80,
@@ -98,9 +98,9 @@ class _CartPageState extends State<CartPage> {
               child: Row(
                 children: [
                   Text(AppLocalizations.of(context).translate("total_text"),
-                      style: const TextStyle(color: primaryColor, fontSize: 26, fontWeight: FontWeight.w900)),
+                      style: const TextStyle(color: subColor2, fontSize: 26, fontWeight: FontWeight.w900)),
                   Text("${Cart().cartTotal().toStringAsFixed(2)}€",
-                      style: const TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w500)),
+                      style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w500)),
                   Expanded(child: Container()),
                   TextButton(
                     onPressed: () {

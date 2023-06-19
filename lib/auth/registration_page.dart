@@ -32,7 +32,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Center(
           child: Container(
             width: 300,
-            height: 450,
+            height: 500,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: secondaryColor,
@@ -53,7 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   height: 35,
                 ),
                 Text(AppLocalizations.of(context).translate("register_text"),
-                    style: const TextStyle(color: primaryColor, fontSize: 45, fontWeight: FontWeight.bold)),
+                    style: const TextStyle(color: primaryColor, fontSize: 40, fontWeight: FontWeight.bold)),
                 const Divider(
                   color: primaryColor,
                   thickness: 8,

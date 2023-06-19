@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:caffe_app_user/models/menu_model.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Cart {
   static Cart? _instance;
@@ -121,16 +122,9 @@ class Cart {
   int get getCartLength => _cart.length;
 
   void commitOrder(int tableId) async {
+    Random random = Random();
     int pointsTotal = cartPointsTotal();
-
-    int orderNumber;
-    final DatabaseReference orderLengthRef = database.ref("orders/");
-    final snapshot = await orderLengthRef.get();
-    if (snapshot.exists) {
-      orderNumber = snapshot.children.length + 1;
-    } else {
-      orderNumber = 1;
-    }
+    int orderNumber = random.nextInt(2305200499);
 
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     var user = users.where('uid', isEqualTo: Auth().currentUser?.uid).limit(1).get();

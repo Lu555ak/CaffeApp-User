@@ -56,29 +56,29 @@ class _LoyaltyPageState extends State<LoyaltyPage> {
                   case ConnectionState.active:
                     return const Center(child: CircularProgressIndicator());
                   case ConnectionState.done:
-                    if (Menu().creditMenuItems().isNotEmpty) {
+                    if (Menu().getCreditMenuItems.isNotEmpty) {
                       return Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: Menu().creditMenuItems().length,
+                          itemCount: Menu().getCreditMenuItems.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
                           itemBuilder: (context, index) {
                             return CreditsShopComponent(
-                              item: Menu().creditMenuItems()[index],
+                              item: Menu().getCreditMenuItems[index],
                               onPress: () {
-                                if (Cart().credits.value < Menu().creditMenuItems()[index].getCreditPrice) {
+                                if (Cart().credits.value < Menu().getCreditMenuItems[index].getCreditPrice) {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content:
                                         Text(AppLocalizations.of(context).translate("credit_shop_not_enough_credits")),
                                     backgroundColor: dangerColor,
                                   ));
                                 } else {
-                                  Cart().addCreditsItem(Menu().creditMenuItems()[index].getName);
+                                  Cart().addCreditsItem(Menu().getCreditMenuItems[index].getName);
                                   Cart().updateCredits(
-                                      Cart().credits.value - Menu().creditMenuItems()[index].getCreditPrice);
+                                      Cart().credits.value - Menu().getCreditMenuItems[index].getCreditPrice);
                                 }
                               },
                             );

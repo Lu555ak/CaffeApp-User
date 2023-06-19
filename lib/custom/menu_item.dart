@@ -16,14 +16,14 @@ class MenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Row(
+        title: Wrap(
+          direction: Axis.horizontal,
           children: [
             Text(
-              menuItem.getName.toUpperCase(),
+              "${menuItem.getName.toUpperCase()}   ",
               style: const TextStyle(color: subColor2, fontSize: 18, fontWeight: FontWeight.w900),
             ),
-            Padding(
-                padding: const EdgeInsets.only(left: 15.0), child: DiscountComponent(discount: menuItem.getDiscount))
+            DiscountComponent(discount: menuItem.getDiscount)
           ],
         ),
         subtitle: (menuItem.getDiscount == 0)

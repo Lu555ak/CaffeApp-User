@@ -43,7 +43,7 @@ class ForgotPasswordPage extends StatelessWidget {
               child: Column(children: [
                 Text(AppLocalizations.of(context).translate("forgot_password_text"),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w500)),
+                    style: const TextStyle(color: subColor2, fontSize: 20, fontWeight: FontWeight.w500)),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Form(

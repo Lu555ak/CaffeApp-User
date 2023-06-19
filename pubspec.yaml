@@ -1,7 +1,7 @@
 name: caffe_app_user
-description: A new Flutter project.
+description: Caffe application that allows table orders by scanning the QR code.
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -14,6 +14,7 @@ dependencies:
 
   google_nav_bar: ^5.0.6
   mobile_scanner: ^3.2.0
+  qr_code_scanner: ^1.0.1
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1

@@ -31,10 +31,6 @@ class AppLocalizations {
   String translate(String key) {
     return _localizedStrings[key] ?? "";
   }
-
-  Future<String> translateAsync(String key) async {
-    return _localizedStrings[key] ?? "";
-  }
 }
 
 class _AppLocalizationsDelegate
